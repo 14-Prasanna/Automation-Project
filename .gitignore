@@ -1,5 +1,7 @@
 .metadata
 .idea
+.project
+.classpath
 
 target/
 target-output/
