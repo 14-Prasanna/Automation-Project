@@ -5,7 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverClass {
 
@@ -19,15 +21,34 @@ public class DriverClass {
     public static void initDriver() {
 
         String browser = System.getProperty("browser", "chrome");
+        String headlessValue = System.getProperty("headless", "false");
+
+        boolean headless = headlessValue.equalsIgnoreCase("true");
+
         logger.info("Initializing Browser: " + browser);
+        logger.info("Headless Mode: " + headless);
 
         if (browser.equalsIgnoreCase("chrome")) {
+
             WebDriverManager.chromedriver().setup();
-            driver.set(new ChromeDriver());
+
+            ChromeOptions options = new ChromeOptions();
+            if (headless) {
+                options.addArguments("--headless=new");
+            }
+
+            driver.set(new ChromeDriver(options));
         }
         else if (browser.equalsIgnoreCase("firefox")) {
+
             WebDriverManager.firefoxdriver().setup();
-            driver.set(new FirefoxDriver());
+
+            FirefoxOptions options = new FirefoxOptions();
+            if (headless) {
+                options.addArguments("--headless");
+            }
+
+            driver.set(new FirefoxDriver(options));
         }
         else {
             logger.error("Invalid Browser Name: " + browser);
