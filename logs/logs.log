@@ -8,3 +8,14 @@
 [INFO ] 2026-05-12 15:38:12.264 [main] Launch - Launching application URL: https://ecommerce-playground.lambdatest.io/index.php?route=common/home
 [INFO ] 2026-05-12 15:38:17.536 [main] Launch - Logo Displayed Status: true
 [INFO ] 2026-05-12 15:38:17.540 [main] DriverClass - Closing browser session
+[INFO ] 2026-05-12 16:58:39.108 [main] DriverClass - Initializing Browser: firefox
+[INFO ] 2026-05-12 16:58:39.112 [main] DriverClass - Headless Mode: true
+[INFO ] 2026-05-12 16:58:47.221 [main] DriverClass - Browser launched successfully
+[INFO ] 2026-05-12 16:58:47.605 [main] Launch - Launching application URL: https://ecommerce-playground.lambdatest.io/index.php?route=common/home
+[INFO ] 2026-05-12 16:59:03.614 [main] Launch - Expected URL: https://ecommerce-playground.lambdatest.io/index.php?route=common/home
+[INFO ] 2026-05-12 16:59:03.617 [main] Launch - Actual URL: https://ecommerce-playground.lambdatest.io/index.php?route=common/home
+[INFO ] 2026-05-12 16:59:03.629 [main] Launch - Launching application URL: https://ecommerce-playground.lambdatest.io/index.php?route=common/home
+[INFO ] 2026-05-12 16:59:09.014 [main] Launch - Page Title: Your Store
+[INFO ] 2026-05-12 16:59:09.021 [main] Launch - Launching application URL: https://ecommerce-playground.lambdatest.io/index.php?route=common/home
+[INFO ] 2026-05-12 16:59:11.664 [main] Launch - Logo Displayed Status: true
+[INFO ] 2026-05-12 16:59:11.669 [main] DriverClass - Closing browser session
