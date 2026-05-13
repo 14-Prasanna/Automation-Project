@@ -56,3 +56,15 @@
 [INFO ] 2026-05-13 10:56:07.347 [main] Launch - Logo Displayed Status: true
 [INFO ] 2026-05-13 10:56:07.354 [main] DriverClass - Closing browser session
 >>>>>>> 58def6fea501c79ebf5986a38c4da2c193732197
+[INFO ] 2026-05-13 12:10:44.439 [main] DriverClass - Initializing Browser: chrome
+[INFO ] 2026-05-13 12:10:44.444 [main] DriverClass - Headless Mode: true
+[INFO ] 2026-05-13 12:10:47.642 [main] DriverClass - Browser launched successfully
+[INFO ] 2026-05-13 12:10:48.318 [main] DriverClass - Closing browser session
+[INFO ] 2026-05-13 12:11:33.620 [main] DriverClass - Initializing Browser: chrome
+[INFO ] 2026-05-13 12:11:33.622 [main] DriverClass - Headless Mode: true
+[INFO ] 2026-05-13 12:11:35.889 [main] DriverClass - Browser launched successfully
+[INFO ] 2026-05-13 12:11:36.396 [main] DriverClass - Closing browser session
+[INFO ] 2026-05-13 12:12:47.998 [main] DriverClass - Initializing Browser: chrome
+[INFO ] 2026-05-13 12:12:48.003 [main] DriverClass - Headless Mode: true
+[INFO ] 2026-05-13 12:12:53.153 [main] DriverClass - Browser launched successfully
+[INFO ] 2026-05-13 12:12:53.654 [main] DriverClass - Closing browser session
