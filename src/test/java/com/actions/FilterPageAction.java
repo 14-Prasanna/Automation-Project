@@ -1,35 +1,24 @@
 package com.actions;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import java.time.Duration;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.driver.DriverClass;
 import com.pages.FilterPage;
 
-public class FilterPageAction extends BasePageAction {
-
-	FilterPage fp;
-	WebDriver driver;
-
-	public FilterPageAction(WebDriver driver) {
-		super(driver);
-		this.driver = driver;
-		fp = new FilterPage(driver);
+public class filterPageAction {
+	WebDriver driver= DriverClass.getDriver();
+	FilterPage fp=new FilterPage(driver);
+	WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(10));
+	public void clickManufacture() {
+		wait.until(ExpectedConditions.elementToBeClickable(fp.Applebtn));
+		fp.Applebtn.click();
 	}
-	public String getPageTitle() {
-		return driver.getTitle();
+	public void clickProduct() {
+		wait.until(ExpectedConditions.elementToBeClickable(fp.iPodTouchProduct));
+		fp.iPodTouchProduct.click();
 	}
-	public void enterMinimumPrice(String minPrice) {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("document.querySelector(\"div[id='mz-filter-panel-0-0'] input[placeholder='Minimum Price']\")", fp.minimumPrice, minPrice);
-	}
-
-	public void enterMaximumPrice(String maxPrice) {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', {bubbles: true}));", fp.maxPrice, maxPrice);
-	}
-	public void FilterBymanufacture() {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].click();", fp.Applebtn);
-	}
-	
 }
