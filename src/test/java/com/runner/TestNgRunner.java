@@ -4,7 +4,8 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
-@CucumberOptions(features = "src/test/resources/features/login.feature", glue = { "com.stepDefinitions",
+@CucumberOptions(features = {"src/test/resources/features/login.feature",
+"src/test/resources/features/ShopByCategory.feature"}, glue = { "com.stepDefinitions",
 		"com.hooks" }, plugin = { "pretty",
 				"html:target/cucumber-report.html" }, tags = "@validCredentials or @invalidCredentials", monochrome = true)
 

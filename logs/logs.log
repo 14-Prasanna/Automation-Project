@@ -194,3 +194,29 @@
 [INFO ] 2026-05-14 12:16:59.715 [main] DriverClass - Headless Mode: true
 [INFO ] 2026-05-14 12:17:00.501 [main] DriverClass - Browser launched successfully
 [INFO ] 2026-05-14 12:17:00.514 [main] DriverClass - Closing browser session
+[INFO ] 2026-05-14 12:41:52.050 [main] DriverClass - Initializing Browser: chrome
+[INFO ] 2026-05-14 12:41:52.056 [main] DriverClass - Headless Mode: true
+[INFO ] 2026-05-14 12:41:54.522 [main] DriverClass - Browser launched successfully
+[INFO ] 2026-05-14 12:41:54.554 [main] DriverClass - Closing browser session
+[INFO ] 2026-05-14 12:41:54.880 [main] DriverClass - Initializing Browser: chrome
+[INFO ] 2026-05-14 12:41:54.882 [main] DriverClass - Headless Mode: true
+[INFO ] 2026-05-14 12:41:56.163 [main] DriverClass - Browser launched successfully
+[INFO ] 2026-05-14 12:41:56.178 [main] DriverClass - Closing browser session
+[INFO ] 2026-05-14 12:41:56.455 [main] DriverClass - Initializing Browser: chrome
+[INFO ] 2026-05-14 12:41:56.456 [main] DriverClass - Headless Mode: true
+[INFO ] 2026-05-14 12:41:57.373 [main] DriverClass - Browser launched successfully
+[INFO ] 2026-05-14 12:41:57.386 [main] DriverClass - Closing browser session
+[INFO ] 2026-05-14 12:41:57.611 [main] DriverClass - Initializing Browser: chrome
+[INFO ] 2026-05-14 12:41:57.611 [main] DriverClass - Headless Mode: true
+[INFO ] 2026-05-14 12:41:59.763 [main] DriverClass - Browser launched successfully
+[INFO ] 2026-05-14 12:41:59.785 [main] DriverClass - Closing browser session
+[INFO ] 2026-05-14 14:11:54.499 [main] DriverClass - Initializing Browser: chrome
+[INFO ] 2026-05-14 14:11:54.501 [main] DriverClass - Headless Mode: true
+[INFO ] 2026-05-14 14:11:56.466 [main] DriverClass - Browser launched successfully
+[INFO ] 2026-05-14 14:12:08.225 [main] LoginSD - Login Successful
+[INFO ] 2026-05-14 14:12:08.227 [main] DriverClass - Closing browser session
+[INFO ] 2026-05-14 14:12:08.598 [main] DriverClass - Initializing Browser: chrome
+[INFO ] 2026-05-14 14:12:08.599 [main] DriverClass - Headless Mode: true
+[INFO ] 2026-05-14 14:12:09.631 [main] DriverClass - Browser launched successfully
+[INFO ] 2026-05-14 14:12:20.327 [main] LoginSD - Login Unsuccessful as expected
+[INFO ] 2026-05-14 14:12:20.330 [main] DriverClass - Closing browser session
