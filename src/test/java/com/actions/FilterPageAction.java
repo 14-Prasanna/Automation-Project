@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.driver.DriverClass;
 import com.pages.FilterPage;
 
-public class filterPageAction {
+public class FilterPageAction {
 	WebDriver driver= DriverClass.getDriver();
 	FilterPage fp=new FilterPage(driver);
 	WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(10));
