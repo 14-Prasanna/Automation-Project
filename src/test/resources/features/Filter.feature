@@ -1,3 +1,4 @@
+@smoke
 Feature: Product Filter Functionality
 
   Background:

@@ -2,8 +2,8 @@ package com.stepDefinitions;
 
 import org.testng.Assert;
 
+import com.actions.FilterPageAction;
 import com.actions.LaunchPageAction;
-import com.actions.filterPageAction;
 import com.actions.productPageAction;
 import com.driver.DriverClass;
 import com.pages.LaunchPages;
@@ -17,7 +17,7 @@ public class filterDefinition {
 
 	LaunchPages lp = new LaunchPages(DriverClass.getDriver());
 
-	filterPageAction fpa = new filterPageAction();
+	FilterPageAction fpa = new FilterPageAction();
 
 	productPageAction ppa = new productPageAction();
 
