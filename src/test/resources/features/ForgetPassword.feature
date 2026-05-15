@@ -1,3 +1,4 @@
+@Rest
 Feature:Reset password through forget password -Jothika 13/05/2026
 
 Description:This feature manages forget password functionality
