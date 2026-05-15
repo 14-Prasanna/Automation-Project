@@ -7,6 +7,7 @@ import org.testng.Assert;
 
 import com.actions.ShopByCategoryAction;
 import com.driver.DriverClass;
+import com.pages.LaunchPages;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -16,7 +17,7 @@ public class ShopByCategory {
 	private static final Logger log = LogManager.getLogger(ShopByCategory.class);
     WebDriver driver=DriverClass.getDriver();
     ShopByCategoryAction sbc = new ShopByCategoryAction();
-
+LaunchPages lp=new LaunchPages(driver);
     @Given("the user launches the ecommerce application")
     public void the_user_launches_the_ecommerce_application() {
 

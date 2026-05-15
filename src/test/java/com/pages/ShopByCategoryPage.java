@@ -12,7 +12,7 @@ public class ShopByCategoryPage extends BasePage {
     }
 
     // Shop By Category Menu
-    @FindBy(xpath="//a[normalize-space()='Shop by Category']")
+    @FindBy(xpath="//body[1]/div[1]/div[5]/header[1]/div[3]/div[1]/div[1]/div[2]/a[1]/span[1]/*[name()='svg']/*[name()='use']")
     public WebElement shopByCategoryMenu;
     // Desktops & Monitors
     @FindBy(xpath = "//span[normalize-space()='Desktops and Monitors']")

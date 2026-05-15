@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="4" passed="4" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2026-05-15T11:29:15 IST" name="Default suite" finished-at="2026-05-15T11:30:18 IST" duration-ms="62404">
+    <groups>
+      <group name="cucumber">
+        <method signature="AbstractTestNGCucumberTests.runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:com.runner.TestNgRunner@16c069df]" name="runScenario" class="io.cucumber.testng.AbstractTestNGCucumberTests"/>
+      </group> <!-- cucumber -->
+    </groups>
+    <test started-at="2026-05-15T11:29:15 IST" name="Default test" finished-at="2026-05-15T11:30:18 IST" duration-ms="62404">
+      <class name="com.runner.TestNgRunner">
+        <test-method is-config="true" signature="setUpClass(org.testng.ITestContext)[pri:0, instance:com.runner.TestNgRunner@16c069df]" started-at="2026-05-15T11:29:15 IST" name="setUpClass" finished-at="2026-05-15T11:29:17 IST" duration-ms="1361" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@3a54638b]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpClass -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:com.runner.TestNgRunner@16c069df]" started-at="2026-05-15T11:29:17 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-05-15T11:29:26 IST" duration-ms="9776" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Verify user can navigate using valid Shop By Category options"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Shop By Category Navigation"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:com.runner.TestNgRunner@16c069df]" started-at="2026-05-15T11:29:26 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-05-15T11:30:02 IST" duration-ms="35508" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Verify user can navigate using valid Shop By Category options"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Shop By Category Navigation"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:com.runner.TestNgRunner@16c069df]" started-at="2026-05-15T11:30:02 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-05-15T11:30:09 IST" duration-ms="6934" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Verify user can navigate using valid Shop By Category options"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Shop By Category Navigation"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:com.runner.TestNgRunner@16c069df]" started-at="2026-05-15T11:30:09 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-05-15T11:30:17 IST" duration-ms="8168" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Verify user can navigate using valid Shop By Category options"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Shop By Category Navigation"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:com.runner.TestNgRunner@16c069df]" started-at="2026-05-15T11:30:17 IST" name="tearDownClass" finished-at="2026-05-15T11:30:18 IST" duration-ms="558" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownClass -->
+      </class> <!-- com.runner.TestNgRunner -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

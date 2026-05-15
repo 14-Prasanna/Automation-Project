@@ -21,7 +21,7 @@ WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(15));
     }
 
     public void clickShopByCategory() {
-
+    	
          wait.until(ExpectedConditions.visibilityOf(sbcp.shopByCategoryMenu)).click();
     }
 
