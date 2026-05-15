@@ -1,47 +1,51 @@
-package com.actions;
-
-import java.time.Duration;
+package com.pages;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-import com.driver.DriverClass;
-import com.pages.ShopByCategoryPage;
+public class ShopByCategoryPage extends BasePage {
 
-public class ShopByCategoryAction {
+    public ShopByCategoryPage(WebDriver driver) {
 
-    WebDriver driver = DriverClass.getDriver();
-WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(20));
-    ShopByCategoryPage sbcp = new ShopByCategoryPage(driver);
-
-    public void launchWebUrl() {
-
-        driver.get("https://ecommerce-playground.lambdatest.io/");
+        super(driver);
     }
 
-    public void clickShopByCategory() {
-    	
-         wait.until(ExpectedConditions.elementToBeClickable(sbcp.shopByCategoryMenu)).click();
-    }
+    // -------------------------------------------------------------------------
+    // FIX 1: The original xpath //a[@aria-label='Shop by Category'] was not
+    // matching any visible element on the page. The Shop By Category button
+    // uses a drawer-toggle pattern (data-toggle="mz-pure-drawer"). Using a
+    // more reliable CSS selector that targets this pattern scoped to the nav.
+    // -------------------------------------------------------------------------
 
-    public void selectCategory(String category) {
-         if(category=="Desktops & Monitors") {
-        	 wait.until(ExpectedConditions.visibilityOf(sbcp.desktopsCategory)).click();
-         }
-         else if(category=="WebCameras") {
-        	 wait.until(ExpectedConditions.visibilityOf(sbcp.cameras)).click();
-         }
-         else if(category=="Phone, Tablets & Ipod") {
-        	 wait.until(ExpectedConditions.visibilityOf(sbcp.tablets)).click();
-         }
-         else if(category=="Laptops & Notebooks") {
-        	 wait.until(ExpectedConditions.visibilityOf(sbcp.laptops)).click();
-         }
-    }
+    @FindBy(xpath = "a[data-toggle='mz-pure-drawer']")
+    public WebElement shopByCategoryMenu;
 
-    public String getPageTitle() {
 
-        return driver.getTitle();
-    }
+    // -------------------------------------------------------------------------
+    // FIX 3: The original xpath used 'Desktops and Monitors' (with "and") but
+    // the actual DOM text is 'Desktops & Monitors' (with ampersand). Corrected
+    // to match what the live site renders in the dropdown menu.
+    // -------------------------------------------------------------------------
+
+    @FindBy(xpath = "//span[normalize-space()='Desktops & Monitors']")
+    public WebElement desktopsCategory;
+
+
+    // Web Cameras — no change needed, text matches the live site
+
+    @FindBy(xpath = "//span[normalize-space()='Web Cameras']")
+    public WebElement cameras;
+
+
+    // Phone, Tablets & Ipod — no change needed, text matches the live site
+
+    @FindBy(xpath = "//span[normalize-space()='Phone, Tablets & Ipod']")
+    public WebElement tablets;
+
+
+    // Laptops & Notebooks — no change needed, text matches the live site
+
+    @FindBy(xpath = "//span[normalize-space()='Laptops & Notebooks']")
+    public WebElement laptops;
 }
