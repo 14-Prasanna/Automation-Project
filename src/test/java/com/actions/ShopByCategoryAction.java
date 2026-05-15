@@ -1,51 +1,134 @@
-package com.pages;
+package com.actions;
 
+import java.time.Duration;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class ShopByCategoryPage extends BasePage {
+import com.driver.DriverClass;
+import com.pages.ShopByCategoryPage;
 
-    public ShopByCategoryPage(WebDriver driver) {
+public class ShopByCategoryAction {
 
-        super(driver);
+    private static final Logger log = LogManager.getLogger(ShopByCategoryAction.class);
+
+    WebDriver driver = DriverClass.getDriver();
+
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+    ShopByCategoryPage sbcp = new ShopByCategoryPage(driver);
+
+    JavascriptExecutor js = (JavascriptExecutor) driver;
+
+    public void launchWebUrl() {
+
+        try {
+
+            driver.get("https://ecommerce-playground.lambdatest.io/#mz-component-1626147655");
+
+            driver.manage().window().maximize();
+
+            log.info("Application launched successfully");
+
+        } catch (Exception e) {
+
+            log.error("Failed to launch application : " + e.getMessage());
+        }
     }
 
-    // -------------------------------------------------------------------------
-    // FIX 1: The original xpath //a[@aria-label='Shop by Category'] was not
-    // matching any visible element on the page. The Shop By Category button
-    // uses a drawer-toggle pattern (data-toggle="mz-pure-drawer"). Using a
-    // more reliable CSS selector that targets this pattern scoped to the nav.
-    // -------------------------------------------------------------------------
+    public void clickShopByCategory() {
 
-    @FindBy(xpath = "a[data-toggle='mz-pure-drawer']")
-    public WebElement shopByCategoryMenu;
+        try {
 
+            wait.until(ExpectedConditions.visibilityOf(sbcp.shopByCategoryMenu));
 
-    // -------------------------------------------------------------------------
-    // FIX 3: The original xpath used 'Desktops and Monitors' (with "and") but
-    // the actual DOM text is 'Desktops & Monitors' (with ampersand). Corrected
-    // to match what the live site renders in the dropdown menu.
-    // -------------------------------------------------------------------------
+            wait.until(ExpectedConditions.elementToBeClickable(sbcp.shopByCategoryMenu));
 
-    @FindBy(xpath = "//span[normalize-space()='Desktops & Monitors']")
-    public WebElement desktopsCategory;
+            js.executeScript("arguments[0].scrollIntoView(true);", sbcp.shopByCategoryMenu);
 
+            js.executeScript("arguments[0].click();", sbcp.shopByCategoryMenu);
 
-    // Web Cameras — no change needed, text matches the live site
+            log.info("Clicked Shop By Category Menu");
 
-    @FindBy(xpath = "//span[normalize-space()='Web Cameras']")
-    public WebElement cameras;
+        } catch (Exception e) {
 
+            log.error("Unable to click Shop By Category Menu : " + e.getMessage());
+        }
+    }
 
-    // Phone, Tablets & Ipod — no change needed, text matches the live site
+    public void selectCategory(String category) {
 
-    @FindBy(xpath = "//span[normalize-space()='Phone, Tablets & Ipod']")
-    public WebElement tablets;
+        try {
 
+            // -----------------------------------------------------------------
+            // FIX 2: The original condition checked for "Desktops & Monitors"
+            // (with ampersand) but the feature file passes "Desktops and
+            // Monitors" (with "and"). The condition now matches the exact
+            // string the Scenario Outline sends in at runtime.
+            // -----------------------------------------------------------------
 
-    // Laptops & Notebooks — no change needed, text matches the live site
+            if (category.equalsIgnoreCase("Desktops and Monitors")) {
 
-    @FindBy(xpath = "//span[normalize-space()='Laptops & Notebooks']")
-    public WebElement laptops;
+                wait.until(ExpectedConditions.visibilityOf(sbcp.desktopsCategory));
+
+                js.executeScript("arguments[0].click();", sbcp.desktopsCategory);
+
+                log.info("Selected Desktops & Monitors");
+
+            } else if (category.equalsIgnoreCase("Web Cameras")) {
+
+                wait.until(ExpectedConditions.visibilityOf(sbcp.cameras));
+
+                js.executeScript("arguments[0].click();", sbcp.cameras);
+
+                log.info("Selected Web Cameras");
+
+            } else if (category.equalsIgnoreCase("Phone, Tablets & Ipod")) {
+
+                wait.until(ExpectedConditions.visibilityOf(sbcp.tablets));
+
+                js.executeScript("arguments[0].click();", sbcp.tablets);
+
+                log.info("Selected Phone, Tablets & Ipod");
+
+            } else if (category.equalsIgnoreCase("Laptops & Notebooks")) {
+
+                wait.until(ExpectedConditions.visibilityOf(sbcp.laptops));
+
+                js.executeScript("arguments[0].click();", sbcp.laptops);
+
+                log.info("Selected Laptops & Notebooks");
+
+            } else {
+
+                log.error("Invalid Category Name: " + category);
+            }
+
+        } catch (Exception e) {
+
+            log.error("Failed to select category : " + e.getMessage());
+        }
+    }
+
+    public String getPageTitle() {
+
+        String title = "";
+
+        try {
+
+            title = driver.getTitle();
+
+            log.info("Page title fetched successfully");
+
+        } catch (Exception e) {
+
+            log.error("Unable to fetch page title : " + e.getMessage());
+        }
+
+        return title;
+    }
 }
