@@ -11,12 +11,8 @@ To validate the registration process of new user in ecommerce lambda test websit
     When The user clicks on myAccount link in navBar
     And clicks on Register link in Account page
     And Enter your personal details
-      | fname     | lname     | email           | telephone  | password | confirmpassword |
-<<<<<<< HEAD
+      | fname     | lname     | email            | telephone  | password | confirmpassword |
       | Rishwanth | Adhishwar | remo10@gmail.com | 5432109876 | testyou  | testyou         |
-=======
-      | Rishwanth | Adhishwar | remo4@gmail.com | 5432109876 | testyou  | testyou         |
->>>>>>> f4ba97b22f661da06865a59c8ed04ca68e420889
     And check the privacy policy checbox
     And clicks on continue Button
     Then the user should see a page with confirmation text
