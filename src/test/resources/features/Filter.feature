@@ -1,32 +1,19 @@
-Feature: Product Filter Functionality
+@smoke
+Feature: TamilKumar_13/05/2026 Product Filter Functionality
 
-  Background: Given User is on filter page
-
-  @VerifyFilterPage
-  Scenario: Validate filter page title
-    Then User should verify the filter page title
-
-  @VerifyPricefilter
-  Scenario: Validate filter by price
-    When User applies price filter
-    Then Products should display based on selected price range
+  Background:
+    Given User is on Home page click on the Shop By categories Page and Click any one option
 
   @verifyByManufacture
   Scenario: Validate filter by manufacturer
-    When User selects manufacturer filter
-    Then Products should display based on selected manufacturer
 
-  @verifyByProductname
-  Scenario: Validate filter by product name
-    When User enters product name in filter
-    Then Matching products should display successfully
+    When User clicks manufacturer filter any brand element
+    And product should be displayed based on filtered results and Clicks any one product
+    Then check the product brand name in description should be matches the filter
 
-  @verifyShowByproducts
-  Scenario: Validate show by products
-    When User changes show by product count
-    Then Products count should update successfully
+  @showByTotalProduct
+  Scenario: Validate total displayed products based on selected count
 
-  @verifyStockAndOutofStock
-  Scenario: Validate in stock and out of stock filter
-    When User applies stock availability filter
-    Then Products should display based on stock status
+    When User send an option from the show products dropdown
+    And User stores the displayed products in a list
+    Then Displayed product count should match the selected dropdown value
