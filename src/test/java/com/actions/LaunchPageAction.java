@@ -23,4 +23,8 @@ public class LaunchPageAction  {
 	public void clickMonitor() {
 		lp.Desktop.click();
 	}
+	public void clickCanonES5Product() {
+		wait.until(ExpectedConditions.elementToBeClickable(lp.canonES5Product));
+		lp.canonES5Product.click();
+	}
 }
