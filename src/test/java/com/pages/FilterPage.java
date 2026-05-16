@@ -44,4 +44,8 @@ public class FilterPage extends BasePage {
         }
         return productNames;
     }
+    @FindBy(xpath = "//h1[@class='h4']")
+    
+
+	public WebElement softwaretTitle;
 }

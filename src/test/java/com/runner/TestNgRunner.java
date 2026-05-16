@@ -17,7 +17,7 @@ import org.testng.annotations.DataProvider;
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
         },
 
-        tags = "@smoke",
+        tags = "@smoke or @productDetails",
         monochrome = true
 )
 
@@ -29,3 +29,4 @@ public class TestNgRunner extends AbstractTestNGCucumberTests {
         return super.scenarios();
     }
 }
+

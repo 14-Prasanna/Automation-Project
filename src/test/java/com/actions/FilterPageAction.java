@@ -53,4 +53,7 @@ public class FilterPageAction {
     public void clickHTCTouchHD() {
 wait.until(ExpectedConditions.elementToBeClickable(fp.HTCTouchHDProduct)).click();
     }
+    public String getSoftwareTitle() {
+    	return wait.until(ExpectedConditions.visibilityOf(fp.softwaretTitle)).getText();
+    }
 }
