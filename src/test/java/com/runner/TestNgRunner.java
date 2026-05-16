@@ -5,7 +5,7 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
-        features = "src/test/resources/features/Filter.feature",
+        features = {"src/test/resources/features/Filter.feature","src/test/resources/features/ProductPage.feature"},
 
         glue = {"com.stepDefinitions", "com.hooks"},
 
@@ -17,7 +17,6 @@ import org.testng.annotations.DataProvider;
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
         },
 
-        tags = "@smoke or @productDetails",
         monochrome = true
 )
 
