@@ -5,10 +5,7 @@ import com.actions.WishListActions;
 import com.driver.DriverClass;
 import com.pages.LaunchPages;
 import com.utils.ConfigReader;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java.en.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
@@ -21,19 +18,22 @@ public class WishList {
     LaunchPages lp = new LaunchPages(DriverClass.getDriver());
     WishListActions wla = new WishListActions();
 
+    // ========================= BACKGROUND =========================
+
     @Given("the user is on the home page")
     public void the_user_is_on_the_home_page() {
 
         String url = ConfigReader.getProperties().getProperty("url");
         lp.launchApplication(url);
+        logger.info("Launched URL: " + url);
 
-        logger.info("User launched application URL: " + url);
-
-        Assert.assertTrue(DriverClass.getDriver().getCurrentUrl().contains("route=common/home"),
-                "Home page not launched properly");
+        Assert.assertTrue(
+                DriverClass.getDriver().getCurrentUrl().contains("route=common/home"),
+                "Home page URL mismatch. Actual URL: " + DriverClass.getDriver().getCurrentUrl()
+        );
     }
 
-    @Given("the user is a registered user")
+    @And("the user is a registered user")
     public void the_user_is_a_registered_user() {
 
         lpa.launchWebUrl();
@@ -41,43 +41,75 @@ public class WishList {
         lpa.enterEmailAndPass("testlogin@gmail.com", "testlogin");
         lpa.clickLoginButton();
 
-        String actual = lpa.LoginSuccessMsg();
+        String actual   = lpa.LoginSuccessMsg();
         String expected = "My Account";
 
-        Assert.assertEquals(actual, expected, "Login Failed");
-        logger.info("Login Successful");
+        Assert.assertEquals(actual, expected,
+                "Login failed. Expected page heading: [" + expected + "] but got: [" + actual + "]");
+
+        logger.info("Login successful");
     }
 
-    @Given("the user navigates to the Top Products section")
-    public void the_user_navigates_to_the_top_products_section() {
+    // ========================= SCROLL STEPS =========================
 
+    @And("the user navigates to the Top Products section")
+    public void the_user_navigates_to_the_top_products_section() {
         wla.scrollToTopProducts();
         logger.info("Scrolled to Top Products section");
     }
 
+    @And("the user navigates to the Top Collection section")
+    public void the_user_navigates_to_the_top_collection_section() {
+        wla.scrollToTopCollection();
+        logger.info("Scrolled to Top Collection section");
+    }
+
+    // ========================= ADD PRODUCT STEP =========================
+
     @When("the user selects the {string} product and adds it to the wishlist")
     public void the_user_selects_the_product_and_adds_it_to_the_wishlist(String productName) {
 
-        wla.addIMacToWishlist();
+        switch (productName.toLowerCase()) {
+            case "imac":
+                wla.addIMacToWishlist();
+                break;
+            case "apple cinema 30":
+                wla.addAppleCinemaToWishlist();
+                break;
+            case "ipod nano":
+                wla.addIpodNanoToWishlist();
+                break;
+            default:
+                Assert.fail("Unknown product name in feature file: [" + productName + "]. " +
+                        "Add a case in WishList step definition and a method in WishListActions.");
+        }
         logger.info("Added product to wishlist: " + productName);
     }
 
-    @Then("a wishlist success notification should be displayed")
-    public void a_wishlist_success_notification_should_be_displayed() {
+    // ========================= TOAST VALIDATION =========================
 
-        String msg = wla.getWishlistSuccessMessage();
-        logger.info("Wishlist Notification: " + msg);
+    // Takes product name as parameter — prevents reading stale toast from previous product
+    @Then("a wishlist success notification should be displayed for {string}")
+    public void a_wishlist_success_notification_should_be_displayed_for(String productName) {
 
-        Assert.assertTrue(msg.contains("Success"),
-                "Wishlist success message not displayed. Actual: " + msg);
+        String msg = wla.getWishlistSuccessMessage(productName);
+        logger.info("Toast for [" + productName + "]: " + msg);
+
+        Assert.assertTrue(
+                msg.contains("Success"),
+                "Success toast not shown for [" + productName + "]. Actual message: [" + msg + "]"
+        );
     }
 
-    @Then("the user clicks the wishlist link from the notification popup")
-    public void the_user_clicks_the_wishlist_link_from_the_notification_popup() {
+    // ========================= POPUP LINK =========================
 
+    @And("the user clicks the wishlist link from the notification popup")
+    public void the_user_clicks_the_wishlist_link_from_the_notification_popup() {
         wla.clickWishlistLinkFromPopup();
         logger.info("Clicked wishlist link from popup");
     }
+
+    // ========================= REDIRECT VALIDATION =========================
 
     @Then("the user should be redirected to the {string} page")
     public void the_user_should_be_redirected_to_the_page(String pageName) {
@@ -85,34 +117,51 @@ public class WishList {
         wla.waitForWishlistPage();
 
         String actualTitle = wla.getCurrentPageTitle();
-        logger.info("Actual Page Title: " + actualTitle);
+        logger.info("Redirected page title: " + actualTitle);
 
-        Assert.assertTrue(actualTitle.contains(pageName),
-                "User not redirected to correct page. Expected: " + pageName + " but got: " + actualTitle);
+        Assert.assertTrue(
+                actualTitle.contains(pageName),
+                "Redirect failed. Expected title to contain: [" + pageName + "] but got: [" + actualTitle + "]"
+        );
     }
+
+    // ========================= SINGLE PRODUCT VALIDATION =========================
 
     @And("the wishlist product details should match the selected product")
     public void the_wishlist_product_details_should_match_the_selected_product() {
 
-        String actualProductName = wla.getWishlistProductName();
+        String actualName  = wla.getWishlistProductName();
         String actualPrice = wla.getWishlistProductPrice();
 
-        logger.info("Wishlist Product Name: " + actualProductName);
+        logger.info("Wishlist Product Name:  " + actualName);
         logger.info("Wishlist Product Price: " + actualPrice);
 
-        Assert.assertEquals(actualProductName, "iMac",
-                "Wishlist product name mismatch");
+        Assert.assertEquals(actualName, "iMac",
+                "Wishlist product name mismatch. Expected: [iMac] but got: [" + actualName + "]");
 
         Assert.assertFalse(actualPrice.isEmpty(),
-                "Wishlist product price is empty");
+                "Wishlist product price is empty for iMac");
     }
 
-    @When("the user adds multiple products to the wishlist")
-    public void theUserAddsMultipleProductsToTheWishlist() {
-
-    }
+    // ========================= MULTI PRODUCT VALIDATION =========================
 
     @Then("all selected products should be displayed in the wishList page")
-    public void allSelectedProductsShouldBeDisplayedInTheWishListPage() {
+    public void all_selected_products_should_be_displayed_in_the_wish_list_page() {
+
+        boolean appleFound = wla.isProductPresentInWishlist("Apple Cinema");
+        boolean ipodFound  = wla.isProductPresentInWishlist("iPod Nano");
+
+        logger.info("Apple Cinema found in wishlist: " + appleFound);
+        logger.info("iPod Nano found in wishlist:    " + ipodFound);
+
+        Assert.assertTrue(appleFound,
+                "Apple Cinema 30 not found in wishlist table. " +
+                        "Check if product name in table matches the XPath contains() search.");
+
+        Assert.assertTrue(ipodFound,
+                "iPod Nano not found in wishlist table. " +
+                        "Check if product name in table matches the XPath contains() search.");
+
+        logger.info("Both products verified in wishlist");
     }
 }
