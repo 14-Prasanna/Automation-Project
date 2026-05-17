@@ -88,4 +88,10 @@ public class productPageAction {
 		wait.until(ExpectedConditions.elementToBeClickable(pp.minusBtn));
 		pp.minusBtn.click();
 	}
+	public void clickCompareBtn() {
+		wait.until(ExpectedConditions.elementToBeClickable(pp.compareBtn)).click();
+	}
+	public String getConfirmationMessage() {
+		return wait.until(ExpectedConditions.visibilityOf(pp.productComparisonMessage)).getText();
+	}
 }
