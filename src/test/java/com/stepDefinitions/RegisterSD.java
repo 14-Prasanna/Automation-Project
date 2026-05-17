@@ -12,7 +12,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 public class RegisterSD {
-	private static final Logger log = LogManager.getLogger(LoginSD.class);
+	private static final Logger log = LogManager.getLogger(RegisterSD.class);
 	RegisterPageAction rpa = new RegisterPageAction();
 	LoginPageAction lpa = new LoginPageAction();
 
