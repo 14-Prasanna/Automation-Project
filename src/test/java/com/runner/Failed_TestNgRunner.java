@@ -5,17 +5,18 @@ import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
-        features = "src/test/resources/features/",
+        features = {"@target/failedrerun.txt"},
         glue = {"com.stepDefinitions", "com.hooks"},
         plugin = {
                 "pretty",
-                "html:target/cucumber-report.html",
-                "json:target/cucumber-report.json",
+                "html:target/cucumber-report-rerun.html",
+                "json:target/cucumber-rerun-report.json",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"
         },
-        monochrome = true)
-
-public class TestNgRunner extends AbstractTestNGCucumberTests {
+        monochrome = true
+)
+public class Failed_TestNgRunner extends AbstractTestNGCucumberTests {
 
     @Override
     @DataProvider(parallel = false)
@@ -23,4 +24,3 @@ public class TestNgRunner extends AbstractTestNGCucumberTests {
         return super.scenarios();
     }
 }
-

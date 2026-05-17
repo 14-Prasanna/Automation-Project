@@ -95,5 +95,19 @@ public class productPageAction {
 	public  void viewCartPP()
 	{
 		wait.until(ExpectedConditions.visibilityOf(pp.viewCartPopUpButton)).click();
+	public void clickCompareBtn() {
+		wait.until(ExpectedConditions.elementToBeClickable(pp.compareBtn)).click();
+	}
+	public String getConfirmationMessage() {
+		return wait.until(ExpectedConditions.visibilityOf(pp.productComparisonMessage)).getText();
+	}
+	public void clickCart() {
+		wait.until(ExpectedConditions.elementToBeClickable(pp.cartButton)).click();
+	}
+	public String getQuantityInCart() {
+		return wait.until(ExpectedConditions.visibilityOf(pp.quantityField)).getAttribute("value");
+	}
+	public void clickViewCompare() {
+		wait.until(ExpectedConditions.elementToBeClickable(pp.viewCompare)).click();
 	}
 }

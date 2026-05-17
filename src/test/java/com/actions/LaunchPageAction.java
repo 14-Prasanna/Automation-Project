@@ -31,5 +31,13 @@ public class LaunchPageAction  {
 	public void clickProductInTopCollection()
 	{
 		wait.until(ExpectedConditions.visibilityOf(lp.topCollectionProduct)).click();
+	public void clickiMac() {
+		wait.until(ExpectedConditions.elementToBeClickable(lp.iMac)).click();
+	}
+	public void clickProductCompare() {
+		lp.productCompareLink.click();
+	}
+	public void clickHpProduct() {
+		lp.HPLP3065Product.click();
 	}
 }
