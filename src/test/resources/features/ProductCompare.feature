@@ -20,3 +20,10 @@ Feature: Product_compare_functionality
     When the user selects first product from the home page and click compare button
     And the user selects second product from the home page and click compare button
     Then the user should see both products in the comparison page
+  @ModifyInTheCompare
+  Scenario: User need to remove the product from Compare
+    When the user selects any product from the home page
+	And clicks on Compare this Product on the product details page
+	And click compare Button
+	And remove the product from compare 
+	Then the user get an message "Success: You have modified your product comparison!"

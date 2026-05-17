@@ -23,4 +23,10 @@ public class ProductCompareAction {
     public String getiMacTitle() {
     	return pcp.iMacTitle.getText();
     }
+    public void clickRemoveCompare() {
+    	 wait.until(ExpectedConditions.elementToBeClickable(pcp.removeCompare)).click();
+    }
+    public String getConfirmationRemoved() {
+    	return wait.until(ExpectedConditions.visibilityOf(pcp.removeConfirmation)).getText().replace("×", "").trim();
+    }
 }

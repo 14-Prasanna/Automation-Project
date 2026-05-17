@@ -33,4 +33,7 @@ public class LaunchPageAction  {
 	public void clickProductCompare() {
 		lp.productCompareLink.click();
 	}
+	public void clickHpProduct() {
+		lp.HPLP3065Product.click();
+	}
 }

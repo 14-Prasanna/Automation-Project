@@ -94,4 +94,13 @@ public class productPageAction {
 	public String getConfirmationMessage() {
 		return wait.until(ExpectedConditions.visibilityOf(pp.productComparisonMessage)).getText();
 	}
+	public void clickCart() {
+		wait.until(ExpectedConditions.elementToBeClickable(pp.cartButton)).click();
+	}
+	public String getQuantityInCart() {
+		return wait.until(ExpectedConditions.visibilityOf(pp.quantityField)).getAttribute("value");
+	}
+	public void clickViewCompare() {
+		wait.until(ExpectedConditions.elementToBeClickable(pp.viewCompare)).click();
+	}
 }

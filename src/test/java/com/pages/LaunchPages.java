@@ -47,5 +47,7 @@ public class LaunchPages {
 	public WebElement productCompareLink;
 	@FindBy(xpath = "//a[@id='mz-product-listing-image-37218399-0-0']//div[@class='carousel-item active']//img[@title='iMac']")
 	public WebElement iMac;
+	@FindBy(xpath = "//a[@id='mz-product-listing-image-39218404-0-3']//div[@class='carousel-item active']//img[@title='HP LP3065']")
+	public WebElement HPLP3065Product;
 	
 }

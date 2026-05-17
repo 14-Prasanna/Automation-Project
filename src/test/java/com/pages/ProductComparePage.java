@@ -16,5 +16,8 @@ public class ProductComparePage extends BasePage{
 	public WebElement iMacTitle;
 	@FindBy(xpath = "//strong[normalize-space()='Canon EOS 5D']")
 	public WebElement CanonSDtitle;
-
+	@FindBy(xpath = "//a[@class='btn btn-danger btn-block']")
+	public WebElement removeCompare;
+	@FindBy(xpath = "//div[@class='alert alert-success alert-dismissible']")
+	public WebElement removeConfirmation;
 }

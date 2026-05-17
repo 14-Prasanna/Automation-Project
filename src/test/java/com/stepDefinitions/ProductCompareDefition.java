@@ -55,30 +55,47 @@ public class ProductCompareDefition {
 		// Write code here that turns the phrase above into concrete actions
 		Assert.assertTrue(ppa.getConfirmationMessage().contains("Success: You have added"));
 	}
+
 	@When("the user selects first product from the home page and click compare button")
 	public void the_user_selects_two_products_from_the_home_page() {
-	    // Write code here that turns the phrase above into concrete actions
+		// Write code here that turns the phrase above into concrete actions
 		lpa.clickCanonES5Product();
 		ppa.clickCompareBtn();
-		
+
 		DriverClass.getDriver().navigate().back();
 	}
 
 	@When("the user selects second product from the home page and click compare button")
 	public void clicks_compare_this_product_on_both_product_detail_pages() {
-	    // Write code here that turns the phrase above into concrete actions
-	    lpa.clickiMac();
-	    ppa.clickCompareBtn();
-	    lpa.clickProductCompare();
+		// Write code here that turns the phrase above into concrete actions
+		lpa.clickiMac();
+		ppa.clickCompareBtn();
+		lpa.clickProductCompare();
 	}
 
 	@Then("the user should see both products in the comparison page")
 	public void the_user_should_see_both_products_in_the_comparison_page() {
-	    // Write code here that turns the phrase above into concrete actions
-	    Assert.assertEquals("iMac", pca.getiMacTitle());
-	    Assert.assertEquals("Canon EOS 5D",pca.getCanonTitle());
+		// Write code here that turns the phrase above into concrete actions
+		Assert.assertEquals("iMac", pca.getiMacTitle());
+		Assert.assertEquals("Canon EOS 5D", pca.getCanonTitle());
 	}
 
+	@When("click compare Button")
+	public void click_compare_button() {
+		// Write code here that turns the phrase above into concrete actions
+	ppa.clickViewCompare();;
+	}
 
+	@When("remove the product from compare")
+	public void remove_the_product_from_compare() {
+		// Write code here that turns the phrase above into concrete actions
+		pca.clickRemoveCompare();
+	}
+
+	@Then("the user get an message {string}")
+	public void the_user_get_an_message(String string) {
+		// Write code here that turns the phrase above into concrete actions
+		Assert.assertEquals(string, pca.getConfirmationRemoved());
+	}
 
 }
