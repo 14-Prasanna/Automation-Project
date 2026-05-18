@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.driver.DriverClass;
+import com.pages.LaunchPages;
 import com.pages.ShopByCategoryPage;
 
 public class ShopByCategoryAction {
@@ -19,7 +20,7 @@ public class ShopByCategoryAction {
     WebDriver driver = DriverClass.getDriver();
 
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-
+    LaunchPages lp=new LaunchPages(driver);
     ShopByCategoryPage sbcp = new ShopByCategoryPage(driver);
 
     JavascriptExecutor js = (JavascriptExecutor) driver;
@@ -73,9 +74,9 @@ public class ShopByCategoryAction {
 
             if (category.equalsIgnoreCase("Desktops and Monitors")) {
 
-                wait.until(ExpectedConditions.visibilityOf(sbcp.desktopsCategory));
+                
 
-                js.executeScript("arguments[0].click();", sbcp.desktopsCategory);
+                wait.until(ExpectedConditions.elementToBeClickable(lp.Desktop)).click();
 
                 log.info("Selected Desktops & Monitors");
 
