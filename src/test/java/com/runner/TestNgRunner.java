@@ -17,7 +17,7 @@ import org.testng.annotations.DataProvider;
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
                 "rerun:target/failedrerun.txt",
         },
-
+        tags = "@Search",
         monochrome = true
 )
 
