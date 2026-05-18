@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -35,6 +36,16 @@ public class CartPageActions {
 	}
 	public String getQuantitySuccessMsg()
 	{
+        try {
+            Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+            System.out.println("Alert Message: " + alert.getText());
+            alert.accept();
+        } catch (Exception e) {
+
+            System.out.println("No Alert Present");
+
+        }
+		
 		return wait.until(ExpectedConditions.visibilityOf(cp.quantityUpdatedMsg)).getText();
 	}
 	
