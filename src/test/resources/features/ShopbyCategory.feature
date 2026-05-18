@@ -16,8 +16,8 @@ Feature: Shop By Category Navigation
     Then the user should navigate to the Category page and the page title should contain "<Expected Title>"
 
     Examples:
-      | Category              | Expected Title        |
-      | Desktops and Monitors | Desktops and Monitors |
-      | Web Cameras           | Web Cameras           |
-      | Phone, Tablets & Ipod | Tablets               |
-      | Laptops & Notebooks   | Laptops               |
+      | Category              | Expected Title |
+      | Desktops & Monitors   | Monitors       |
+      | Web Cameras           | Web Cameras    |
+      | Phone, Tablets & Ipod | Tablets        |
+      | Laptops & Notebooks   | Laptops        |
