@@ -20,7 +20,6 @@ public class ShopByCategoryPage extends BasePage {
     public WebElement desktopsCategory;
 
 
-
     @FindBy(linkText = "Web Cameras")
     public WebElement cameras;
 
