@@ -17,7 +17,6 @@ import org.testng.annotations.DataProvider;
         },
 	    tags="@RegisterFeature or @LoginFeature or @CartFeature",
         monochrome = true)
-
 public class TestNgRunner extends AbstractTestNGCucumberTests {
 	
     @Override
