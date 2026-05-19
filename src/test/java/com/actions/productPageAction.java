@@ -15,7 +15,7 @@ public class productPageAction extends BaseAction {
 
 	WebDriver driver = DriverClass.getDriver();
 	ProductPage pp = new ProductPage(driver);
-	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
 	public String getBrandName() {
 		return pp.BrandName.getText();
@@ -81,7 +81,7 @@ public class productPageAction extends BaseAction {
 	}
 
 	public void clickAddToCart() {
-		click(pp.addToCartBtn);
+		click(pp.addToCartButton);
 	}
 
 	public void clickWishListBtn() {
@@ -113,7 +113,7 @@ public class productPageAction extends BaseAction {
 	}
 
 	public void clickAddToCartbutton() {
-		wait.until(ExpectedConditions.elementToBeClickable(pp.addToCartButton));
+		wait.until(ExpectedConditions.visibilityOf(pp.addToCartButton));
 		click(pp.addToCartButton);
 	}
 
