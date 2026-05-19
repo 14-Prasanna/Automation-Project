@@ -56,5 +56,5 @@ public class FilterPage extends BasePage {
 
 	@FindBy(xpath = "//div[@id='entry_216826']//span[text()='In Stock']")
 	public WebElement inStockFilter;
-
+	
 }
