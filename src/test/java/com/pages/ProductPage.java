@@ -53,7 +53,7 @@ public class ProductPage extends BasePage {
 	@FindBy(xpath = "//button[contains(.,'Add to Cart')]")
 	public WebElement addToCartBtn;
 
-	@FindBy(xpath = "//button[contains(@title,'Add to Cart')]")
+	@FindBy(xpath = "//div[@class='entry-content content-button d-md-none d-lg-block order-1 order-md-0 order-lg-1']/child::button")
 	public WebElement addToCartButton;
 
 

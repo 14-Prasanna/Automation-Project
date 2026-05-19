@@ -11,22 +11,39 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverClass {
-	
 
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
     private static final Logger logger = LogManager.getLogger(DriverClass.class);
 
     public static WebDriver getDriver() {
-
         return driver.get();
     }
 
     public static void initDriver() {
 
-        String browser = ConfigReader.getProperties().getProperty("browser");
-        String headlessValue = ConfigReader.getProperties().getProperty("headless");
 
-        boolean headless = headlessValue != null && headlessValue.equalsIgnoreCase("true");
+        String browser = System.getProperty("browser");
+        String headlessValue = System.getProperty("headless");
+
+
+        if (browser == null || browser.trim().isEmpty()) {
+            browser = ConfigReader.getProperties().getProperty("browser");
+        }
+
+        if (headlessValue == null || headlessValue.trim().isEmpty()) {
+            headlessValue = ConfigReader.getProperties().getProperty("headless");
+        }
+
+
+        if (browser == null || browser.trim().isEmpty()) {
+            browser = "firefox";
+        }
+
+        if (headlessValue == null || headlessValue.trim().isEmpty()) {
+            headlessValue = "true";
+        }
+
+        boolean headless = headlessValue.equalsIgnoreCase("true");
 
         logger.info("Initializing Browser: " + browser);
         logger.info("Headless Mode: " + headless);
@@ -40,6 +57,7 @@ public class DriverClass {
                 options.addArguments("--headless=new");
             }
 
+            options.addArguments("--start-maximized");
             driver.set(new ChromeDriver(options));
 
         } else if (browser.equalsIgnoreCase("firefox")) {
@@ -48,7 +66,7 @@ public class DriverClass {
             FirefoxOptions options = new FirefoxOptions();
 
             if (headless) {
-                options.addArguments("--headless=new");
+                options.addArguments("--headless");
             }
 
             driver.set(new FirefoxDriver(options));
@@ -63,10 +81,11 @@ public class DriverClass {
     }
 
     public static void quitDriver() {
+
         if (getDriver() != null) {
             logger.info("Closing browser session");
             getDriver().quit();
             driver.remove();
         }
     }
-} 
+}

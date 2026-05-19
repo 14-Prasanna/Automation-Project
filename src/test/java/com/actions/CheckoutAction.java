@@ -52,6 +52,8 @@ public class CheckoutAction extends BaseAction {
     }
 
     public void clickShoppingCartFromPopup() {
+
+        wait.until(ExpectedConditions.visibilityOf(checkoutPage.productPageCheckoutBtn1)).click();
         wait.until(ExpectedConditions.elementToBeClickable(checkoutPage.shoppingCartPopupLink));
         js.executeScript("arguments[0].click();", checkoutPage.shoppingCartPopupLink);
         System.out.println("Clicked Shopping Cart link from popup");

@@ -23,50 +23,48 @@ public class Hooks {
     public void setUp() {
 
         DriverClass.initDriver();
-
         log.info("Browser launched successfully");
     }
 
     @After
     public void tearDown(Scenario scenario) {
 
+        if (DriverClass.getDriver() == null) {
+            log.error("Driver is NULL. Skipping screenshot and quit.");
+            return;
+        }
+
         if (scenario.isFailed()) {
 
-            File screenshot = ((TakesScreenshot) DriverClass.getDriver())
-                    .getScreenshotAs(OutputType.FILE);
-
             try {
+                File screenshot = ((TakesScreenshot) DriverClass.getDriver())
+                        .getScreenshotAs(OutputType.FILE);
 
                 File destinationFile = new File(
                         "screenshots/" +
-                        scenario.getName().replaceAll(" ", "_")
-                        + ".png");
+                                scenario.getName().replaceAll(" ", "_")
+                                + ".png");
+
+                destinationFile.getParentFile().mkdirs();
 
                 FileUtils.copyFile(screenshot, destinationFile);
 
-                byte[] screenshotBytes =
-                        ((TakesScreenshot) DriverClass.getDriver())
-                                .getScreenshotAs(OutputType.BYTES);
+                byte[] screenshotBytes = ((TakesScreenshot) DriverClass.getDriver())
+                        .getScreenshotAs(OutputType.BYTES);
 
-                scenario.attach(
-                        screenshotBytes,
-                        "image/png",
-                        "Failure Screenshot");
+                scenario.attach(screenshotBytes, "image/png", "Failure Screenshot");
 
                 log.error("Scenario Failed : " + scenario.getName());
 
             } catch (IOException e) {
-
                 log.error("Screenshot capture failed : " + e.getMessage());
             }
 
         } else {
-
             log.info("Scenario Passed : " + scenario.getName());
         }
 
         DriverClass.quitDriver();
-
         log.info("Browser closed successfully");
     }
 }

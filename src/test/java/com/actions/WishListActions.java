@@ -110,7 +110,6 @@ public class WishListActions {
         }
     }
 
-    // ========================= NAVIGATION =========================
 
     public void scrollToTopProducts() {
         clickHomeLogo();
@@ -144,7 +143,7 @@ public class WishListActions {
             System.out.println("Navigated to wishlist page via URL");
         }
     }
-    // ========================= ADD TO WISHLIST =========================
+
 
     public void addIMacToWishlist() {
         WebElement card = wait.until(ExpectedConditions.visibilityOf(wp.imacListingBox));
@@ -195,7 +194,7 @@ public class WishListActions {
         }
     }
 
-    // ========================= SEARCH =========================
+
 
     public void searchForProduct(String searchTerm) {
         try {
@@ -275,7 +274,7 @@ public class WishListActions {
         }
     }
 
-    // ========================= SUCCESS TOAST =========================
+
 
     // ✅ FIXED: Use fresh By locator instead of PageFactory element
     public String getWishlistSuccessMessageGeneric() {
@@ -329,7 +328,6 @@ public class WishListActions {
         System.out.println("Clicked wishlist link from popup");
     }
 
-    // ========================= WISHLIST ASSERTIONS =========================
 
     public void waitForWishlistPage() {
         String alertText = dismissAlertIfPresent();
@@ -377,7 +375,6 @@ public class WishListActions {
         return !driver.findElements(locator).isEmpty();
     }
 
-    // ========================= REMOVE PRODUCT =========================
 
     public void removeProductFromWishlist(String productName) {
         wait.until(ExpectedConditions.visibilityOf(wp.myWishListTitle));
