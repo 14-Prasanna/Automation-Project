@@ -3,18 +3,20 @@ package com.actions;
 import java.time.Duration;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.driver.DriverClass;
 import com.pages.LoginPage;
+import com.pages.LogoutPage;
 
-public class LoginPageAction {
-	
+public class LogoutPageAction {
 	WebDriver driver=DriverClass.getDriver();
-	LoginPage lp = new LoginPage(driver);
-	BaseAction ba = new BaseAction();
+	LogoutPage lout=new LogoutPage(driver);
+    LoginPage lp = new LoginPage(driver);
 	WebDriverWait wait=new WebDriverWait(driver,Duration.ofSeconds(15));
+	Actions act = new Actions(driver);
 
 	public void launchWebUrl() {
 		driver.get("https://ecommerce-playground.lambdatest.io/");
@@ -22,36 +24,24 @@ public class LoginPageAction {
 
 	public void clickMyAccountLink()
 	{
-		try
-		{
-			lp.myAccLink.isDisplayed();
-			ba.click(lp.myAccLink);
-		}
-		catch(Exception e)
-		{
-			wait.until(ExpectedConditions.visibilityOf(lp.myAccLink));
-			ba.click(lp.myAccLink);
-
-		}
+		wait.until(ExpectedConditions.visibilityOf(lp.myAccLink)).click();
 	}
 	
 	public void enterEmailAndPass(String username,String password)
-	{	
-		wait.until(ExpectedConditions.visibilityOf(lp.LoginEmail));
-		ba.sendKeys(lp.LoginEmail, username);
-		ba.sendKeys(lp.LoginPassword, password);
+	{
+		wait.until(ExpectedConditions.visibilityOf(lp.LoginEmail)).sendKeys(username);
+		lp.LoginPassword.sendKeys(password);
 	}
 	
 	public void enterPass(String password)
 	{
-		wait.until(ExpectedConditions.visibilityOf(lp.LoginPassword));
-		ba.sendKeys(lp.LoginPassword, password);
+		wait.until(ExpectedConditions.visibilityOf(lp.LoginPassword)).sendKeys(password);
 	}
 	
 	
 	public void clickLoginButton()
 	{
-		ba.click(lp.LoginButton);
+		lp.LoginButton.click();
 	}
 	
 	public String LoginSuccessMsg()
@@ -59,14 +49,26 @@ public class LoginPageAction {
 		return wait.until(ExpectedConditions.visibilityOf(lp.LoginSuccessMessage)).getText();
 	}
 	
+	public void Clickaccount() {
+		
+
+         act.moveToElement(lp.myAccLink).perform();
+
+
+	}
+	public void clickLogout() {
+		wait.until(ExpectedConditions.visibilityOf(lout.logoutBtn)).click();
+	}
+	public String Message() {
+		return lout.Logoutmsg.getText();
+	}
+	
 	public String LoginFailedMsg()
 	{
 		return wait.until(ExpectedConditions.visibilityOf(lp.LoginFailedMessage)).getText();
 	}
-	
-	public String LoginFailedMsgone()
-	{
-		return wait.until(ExpectedConditions.visibilityOf(lp.LoginFailedMessageone)).getText();
+	public boolean LoginDisplayed() {
+	    return lout.login.isDisplayed();
 	}
 	
 
