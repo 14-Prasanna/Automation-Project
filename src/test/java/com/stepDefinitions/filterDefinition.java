@@ -211,16 +211,16 @@ public class filterDefinition {
 	@When("move the slider")
 	public void move_the_slider() {
 
-		fpa.moveSlider();
+	    fpa.moveSlider();
 	}
 
 	@Then("the price should be updated in filter page")
 	public void the_price_should_be_updated_in_filter_page() {
 
-		int price = Integer.parseInt(fpa.getValue());
+	    int price = Integer.parseInt(fpa.getValue());
 
-		System.out.println("Slider Price : " + price);
+	    System.out.println("Slider Price : " + price);
 
-		Assert.assertTrue(price < 2000, "Price is greater than 2000. Actual price: " + price);
+	    Assert.assertTrue(price < 2000, "Price is greater than 2000. Actual price: " + price);
 	}
 }
