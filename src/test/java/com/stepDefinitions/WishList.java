@@ -79,7 +79,7 @@ public class WishList {
     }
 
 
-    @When("the user hovers over the product {string} and clicks the wishlist button")
+    @And("the user hovers over the product {string} and clicks the wishlist button")
     public void the_user_hovers_over_the_product_and_clicks_the_wishlist_button(String csvScenario) {
         Map<String, String> data = CsvDataProvider.getFirstRow(CSV_PATH, csvScenario);
         String productName = data.get("productName");
@@ -88,7 +88,7 @@ public class WishList {
         logger.info("Hovered and clicked wishlist button for: " + productName);
     }
 
-    @When("the user adds multiple products to the wishlist from csv")
+    @And("the user adds multiple products to the wishlist from csv")
     public void the_user_adds_multiple_products_to_the_wishlist_from_csv() {
         List<Map<String, String>> rows = CsvDataProvider.getData(CSV_PATH, "AddMultipleProduct1");
         rows.addAll(CsvDataProvider.getData(CSV_PATH, "AddMultipleProduct2"));
@@ -100,7 +100,7 @@ public class WishList {
         }
     }
 
-    @When("the user searches for {string} and presses Enter")
+    @And("the user searches for {string} and presses Enter")
     public void the_user_searches_for_and_presses_enter(String searchTerm) {
         wla.searchForProduct(searchTerm);
         logger.info("Searched for: " + searchTerm);
@@ -228,7 +228,7 @@ public class WishList {
     }
 
 
-    @When("the user removes the product {string} from the wishlist")
+    @And("the user removes the product {string} from the wishlist")
     public void the_user_removes_the_product_from_the_wishlist(String csvScenario) {
         Map<String, String> data = CsvDataProvider.getFirstRow(CSV_PATH, csvScenario);
         String productName = data.get("productName");
@@ -246,7 +246,7 @@ public class WishList {
     }
 
 
-    @When("the user removes the following products from the wishlist")
+    @And("the user removes the following products from the wishlist")
     public void the_user_removes_the_following_products_from_the_wishlist(DataTable dataTable) {
         // asMaps skips the header row automatically
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);

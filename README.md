@@ -1,5 +1,3 @@
-Here's the professionally corrected and enhanced README:
-
 ```markdown
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?style=for-the-badge&logo=selenium&logoColor=white)
@@ -244,6 +242,16 @@ mvn test -Dtest=Failed_TestNgRunner
 
 ```bash
 mvn clean test -Dsurefire.suiteXmlFiles=testng.xml,testng-failed.xml
+```
+
+**Step 4 - Check the Dependency-Update
+```bash
+mvn versions:display-dependency-updates
+```
+
+**Step 5 - Check Update only property versions
+```bash
+mvn versions:update-properties
 ```
 
 `testng-failed.xml` configuration:
