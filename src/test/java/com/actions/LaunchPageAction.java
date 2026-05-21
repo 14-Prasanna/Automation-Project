@@ -17,6 +17,7 @@ public class LaunchPageAction extends BaseAction {
 	LaunchPages lp = new LaunchPages(driver);
 	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 	public void clickCategories() {
+		wait.until(ExpectedConditions.elementToBeClickable(lp.sshopByCategories));
 		click(lp.shopByCategories);
 	}
 	public void clickMonitor() {
