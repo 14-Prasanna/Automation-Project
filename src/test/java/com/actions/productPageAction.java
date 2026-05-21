@@ -3,6 +3,7 @@ package com.actions;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -113,8 +114,19 @@ public class productPageAction extends BaseAction {
 	}
 
 	public void clickAddToCartbutton() {
-		wait.until(ExpectedConditions.elementToBeClickable(pp.addToCartButton));
-		click(pp.addToCartButton);
+
+	    wait.until(ExpectedConditions.visibilityOf(pp.addToCartBtn));
+
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
+
+	    js.executeScript(
+	        "arguments[0].scrollIntoView({block:'center'});",
+	        pp.addToCartBtn
+	    );
+
+	    wait.until(ExpectedConditions.elementToBeClickable(pp.addToCartBtn));
+
+	    js.executeScript("arguments[0].click();", pp.addToCartBtn);
 	}
 
 	public void viewCartPP() {

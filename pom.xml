@@ -119,6 +119,12 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+      
+      <plugin>
+    <groupId>org.seleniumhq.selenium</groupId>
+    <artifactId>selenium-firefox-driver</artifactId>
+    <version>4.43.0</version>
+</plugin>
 
       <!-- Surefire Plugin for TestNG -->
       <plugin>

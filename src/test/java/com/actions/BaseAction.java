@@ -1,5 +1,7 @@
 package com.actions;
 
+import com.driver.DriverClass;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
@@ -10,12 +12,41 @@ public class BaseAction {
     }
 
     public void sendKeys(WebElement element, String msg) {
-        element.clear();
-        element.sendKeys(msg);
+
+        try {
+
+            element.clear();
+            element.sendKeys(msg);
+
+        } catch (Exception e) {
+
+            ((JavascriptExecutor) DriverClass.getDriver())
+                    .executeScript(
+                            "arguments[0].scrollIntoView({block:'center'});",
+                            element);
+
+            element.clear();
+            element.sendKeys(msg);
+        }
     }
 
+    // THIS METHOD WAS MISSING
     public void sendKeysWithEnter(WebElement element, String msg) {
-        element.clear();
-        element.sendKeys(msg, Keys.ENTER);
+
+        try {
+
+            element.clear();
+            element.sendKeys(msg, Keys.ENTER);
+
+        } catch (Exception e) {
+
+            ((JavascriptExecutor) DriverClass.getDriver())
+                    .executeScript(
+                            "arguments[0].scrollIntoView({block:'center'});",
+                            element);
+
+            element.clear();
+            element.sendKeys(msg, Keys.ENTER);
+        }
     }
 }

@@ -50,9 +50,9 @@ public class ProductPage extends BasePage {
 	public By submissionConfirmation = By.xpath("//div[contains(@class,'alert') and contains(.,'successfully sent')]");
 
 
-	@FindBy(xpath = "//button[contains(.,'Add to Cart')]")
+	@FindBy(xpath = "//div[@id='entry_216842']//button[@title='Add to Cart'][normalize-space()='Add to Cart']")
 	public WebElement addToCartBtn;
-
+	
 	@FindBy(xpath = "//button[contains(@title,'Add to Cart')]")
 	public WebElement addToCartButton;
 

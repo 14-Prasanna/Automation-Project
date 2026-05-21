@@ -17,7 +17,8 @@ import io.cucumber.java.Scenario;
 
 public class Hooks {
 
-    private static final Logger log = LogManager.getLogger(Hooks.class);
+    private static final Logger log =
+            LogManager.getLogger(Hooks.class);
 
     @Before
     public void setUp() {
@@ -30,20 +31,40 @@ public class Hooks {
     @After
     public void tearDown(Scenario scenario) {
 
-        if (scenario.isFailed()) {
+        try {
 
-            File screenshot = ((TakesScreenshot) DriverClass.getDriver())
-                    .getScreenshotAs(OutputType.FILE);
+            // CHECK DRIVER NULL
+            if (scenario.isFailed()
+                    && DriverClass.getDriver() != null) {
 
-            try {
+                // CREATE SCREENSHOTS FOLDER
+                File screenshotFolder =
+                        new File("screenshots");
 
-                File destinationFile = new File(
-                        "screenshots/" +
-                        scenario.getName().replaceAll(" ", "_")
-                        + ".png");
+                if (!screenshotFolder.exists()) {
 
-                FileUtils.copyFile(screenshot, destinationFile);
+                    screenshotFolder.mkdirs();
+                }
 
+                // TAKE SCREENSHOT FILE
+                File screenshot =
+                        ((TakesScreenshot) DriverClass.getDriver())
+                                .getScreenshotAs(OutputType.FILE);
+
+                // DESTINATION
+                File destinationFile =
+                        new File(
+                                "screenshots/"
+                                + scenario.getName()
+                                .replaceAll(" ", "_")
+                                + ".png");
+
+                // COPY FILE
+                FileUtils.copyFile(
+                        screenshot,
+                        destinationFile);
+
+                // ATTACH TO CUCUMBER REPORT
                 byte[] screenshotBytes =
                         ((TakesScreenshot) DriverClass.getDriver())
                                 .getScreenshotAs(OutputType.BYTES);
@@ -53,16 +74,24 @@ public class Hooks {
                         "image/png",
                         "Failure Screenshot");
 
-                log.error("Scenario Failed : " + scenario.getName());
+                log.error("Scenario Failed : "
+                        + scenario.getName());
 
-            } catch (IOException e) {
+            } else {
 
-                log.error("Screenshot capture failed : " + e.getMessage());
+                log.info("Scenario Passed : "
+                        + scenario.getName());
             }
 
-        } else {
+        } catch (IOException e) {
 
-            log.info("Scenario Passed : " + scenario.getName());
+            log.error("Screenshot capture failed : "
+                    + e.getMessage());
+
+        } catch (Exception e) {
+
+            log.error("Error in tearDown : "
+                    + e.getMessage());
         }
 
         DriverClass.quitDriver();
