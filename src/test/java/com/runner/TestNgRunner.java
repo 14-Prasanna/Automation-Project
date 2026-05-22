@@ -16,12 +16,12 @@ import org.testng.annotations.DataProvider;
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
                 "rerun:target/failedrerun.txt"
-<<<<<<< HEAD
-          },tags="@AddReview",
-=======
 
-        },
->>>>>>> 8b83e058e6f92073414d395bd0f06641e04fdd49
+          },tags="@AddReview",
+
+
+        
+
         monochrome = true
 ) 
 
