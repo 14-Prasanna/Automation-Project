@@ -1,4 +1,4 @@
-@AddReview
+@Jothika @AddReview
 Feature: Add review to the product-Jothika 18/05/2026
 Description:This feature facilitates the user to add the feedback on the product as review with star rating ,name with feedback
 

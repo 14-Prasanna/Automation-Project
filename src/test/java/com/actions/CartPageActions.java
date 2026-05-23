@@ -70,8 +70,9 @@ public class CartPageActions {
 		int countryIndex = Integer.parseInt(data.get(0).get("country"));
 		int stateIndex = Integer.parseInt(data.get(0).get("state"));
 		Select country = new Select(cp.dropDownopt1);
-		country.selectByIndex(countryIndex);
+		ba.click(cp.dropDownopt1);		country.selectByIndex(countryIndex);
 		Select state = new Select(cp.dropDownopt2);
+		ba.click(cp.dropDownopt2);
 		state.selectByIndex(stateIndex);
 	}
 

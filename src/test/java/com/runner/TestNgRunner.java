@@ -14,21 +14,10 @@ import org.testng.annotations.DataProvider;
                 "json:target/cucumber-report.json",
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
-                "rerun:target/failedrerun.txt"},
 
-
-
-          
-
-
-        
-
-        
-
-
-
-          tags="@AddReview and @Rest and @Logout",
-
+                "rerun:target/failedrerun.txt"
+    },tags="@Tamil ",
+     
         monochrome = true
 ) 
 
