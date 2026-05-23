@@ -1,6 +1,7 @@
 package com.driver;
 
 import com.utils.ConfigReader;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,177 +28,207 @@ public class DriverClass {
             LogManager.getLogger(DriverClass.class);
 
     public static WebDriver getDriver() {
+
         return driver.get();
     }
 
     public static void initDriver() {
 
-        String browser =
-                ConfigReader.getProperties().getProperty("browser");
+        try {
 
-        String headlessValue =
-                ConfigReader.getProperties().getProperty("headless");
+            String browser =
+                    ConfigReader.getProperties()
+                            .getProperty("browser");
 
-        boolean headless =
-                headlessValue != null &&
-                headlessValue.equalsIgnoreCase("true");
+            String headlessValue =
+                    ConfigReader.getProperties()
+                            .getProperty("headless");
 
-        logger.info("Initializing Browser : " + browser);
-        logger.info("Headless Mode : " + headless);
+            boolean headless =
+                    headlessValue != null
+                            && headlessValue.equalsIgnoreCase("true");
 
-        // ==========================================
-        // CHROME DRIVER
-        // ==========================================
+            logger.info("Initializing Browser : " + browser);
 
-        if (browser.equalsIgnoreCase("chrome")) {
-
-            WebDriverManager.chromedriver().setup();
-
-            ChromeOptions options = new ChromeOptions();
-
-            // Browser Stability
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--disable-gpu");
-            options.addArguments("--remote-allow-origins=*");
-
-            // Disable Chrome Popups
-            options.addArguments("--disable-notifications");
-            options.addArguments("--disable-popup-blocking");
-            options.addArguments("--disable-save-password-bubble");
-            options.addArguments("--disable-password-generation");
-
-            // Disable Password Leak Detection Popup
-            options.addArguments(
-                    "--disable-features=PasswordLeakDetection"
-            );
-
-            // Disable Automation Banner
-            options.setExperimentalOption(
-                    "excludeSwitches",
-                    new String[]{"enable-automation"}
-            );
-
-            options.setExperimentalOption(
-                    "useAutomationExtension",
-                    false
-            );
+            logger.info("Headless Mode : " + headless);
 
             // ==========================================
-            // CHROME PREFERENCES
+            // CHROME DRIVER
             // ==========================================
 
-            Map<String, Object> prefs = new HashMap<>();
+            if (browser.equalsIgnoreCase("chrome")) {
 
-            // Disable Save Password Popup
-            prefs.put(
-                    "credentials_enable_service",
-                    false
-            );
+                WebDriverManager.chromedriver().setup();
 
-            prefs.put(
-                    "profile.password_manager_enabled",
-                    false
-            );
+                ChromeOptions options =
+                        new ChromeOptions();
 
-            // Disable Password Leak Detection
-            prefs.put(
-                    "profile.password_manager_leak_detection",
-                    false
-            );
+                // Browser Stability
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");
+                options.addArguments("--disable-gpu");
+                options.addArguments("--remote-allow-origins=*");
 
-            // Disable Notifications
-            prefs.put(
-                    "profile.default_content_setting_values.notifications",
-                    2
-            );
+                // Disable Chrome Popups
+                options.addArguments("--disable-notifications");
+                options.addArguments("--disable-popup-blocking");
+                options.addArguments("--disable-save-password-bubble");
+                options.addArguments("--disable-password-generation");
 
-            options.setExperimentalOption("prefs", prefs);
+                // Disable Password Leak Detection Popup
+                options.addArguments(
+                        "--disable-features=PasswordLeakDetection"
+                );
 
-            // ==========================================
-            // HEADLESS MODE
-            // ==========================================
+                // Disable Automation Banner
+                options.setExperimentalOption(
+                        "excludeSwitches",
+                        new String[]{"enable-automation"}
+                );
 
-            if (headless) {
+                options.setExperimentalOption(
+                        "useAutomationExtension",
+                        false
+                );
 
-                options.addArguments("--headless=new");
-                options.addArguments("--window-size=1920,1080");
+                // ==========================================
+                // CHROME PREFERENCES
+                // ==========================================
 
-            } else {
+                Map<String, Object> prefs =
+                        new HashMap<>();
 
-                options.addArguments("--start-maximized");
+                // Disable Save Password Popup
+                prefs.put(
+                        "credentials_enable_service",
+                        false
+                );
+
+                prefs.put(
+                        "profile.password_manager_enabled",
+                        false
+                );
+
+                // Disable Password Leak Detection
+                prefs.put(
+                        "profile.password_manager_leak_detection",
+                        false
+                );
+
+                // Disable Notifications
+                prefs.put(
+                        "profile.default_content_setting_values.notifications",
+                        2
+                );
+
+                options.setExperimentalOption(
+                        "prefs",
+                        prefs
+                );
+
+                // ==========================================
+                // HEADLESS MODE
+                // ==========================================
+
+                if (headless) {
+
+                    options.addArguments("--headless=new");
+                    options.addArguments("--window-size=1920,1080");
+
+                } else {
+
+                    options.addArguments("--start-maximized");
+                }
+
+                driver.set(new ChromeDriver(options));
+
+                logger.info(
+                        "Chrome Browser Launched Successfully"
+                );
             }
 
-            driver.set(new ChromeDriver(options));
+            // ==========================================
+            // FIREFOX DRIVER
+            // ==========================================
 
-            logger.info(
-                    "Chrome Browser Launched Successfully"
-            );
+            else if (browser.equalsIgnoreCase("firefox")) {
 
-        }
+                WebDriverManager.firefoxdriver().setup();
 
-        // ==========================================
-        // FIREFOX DRIVER
-        // ==========================================
+                FirefoxOptions options =
+                        new FirefoxOptions();
 
-        else if (browser.equalsIgnoreCase("firefox")) {
+                if (headless) {
 
-            WebDriverManager.firefoxdriver().setup();
+                    options.addArguments("--headless");
+                    options.addArguments("--width=1920");
+                    options.addArguments("--height=1080");
+                }
 
-            FirefoxOptions options = new FirefoxOptions();
+                driver.set(new FirefoxDriver(options));
 
-            if (headless) {
-
-                options.addArguments("--headless");
-                options.addArguments("--width=1920");
-                options.addArguments("--height=1080");
+                logger.info(
+                        "Firefox Browser Launched Successfully"
+                );
             }
 
-            driver.set(new FirefoxDriver(options));
+            // ==========================================
+            // INVALID BROWSER
+            // ==========================================
 
-            logger.info(
-                    "Firefox Browser Launched Successfully"
-            );
+            else {
 
-        }
+                logger.error(
+                        "Invalid Browser Name : " + browser
+                );
 
-        // ==========================================
-        // INVALID BROWSER
-        // ==========================================
+                throw new RuntimeException(
+                        "Invalid Browser Name : " + browser
+                );
+            }
 
-        else {
+            // ==========================================
+            // COMMON SETTINGS
+            // ==========================================
 
-            logger.error(
-                    "Invalid Browser Name : " + browser
-            );
+            getDriver().manage().timeouts()
+                    .implicitlyWait(Duration.ofSeconds(10));
 
-            throw new RuntimeException(
-                    "Invalid Browser Name : " + browser
-            );
-        }
+            if (!headless) {
 
-        // ==========================================
-        // COMMON SETTINGS
-        // ==========================================
+                getDriver().manage().window().maximize();
+            }
 
-        getDriver().manage().timeouts()
-                .implicitlyWait(Duration.ofSeconds(10));
+            logger.info("Browser launched successfully");
 
-        if (!headless) {
+        } catch (Exception e) {
 
-            getDriver().manage().window().maximize();
+            logger.error("Driver Initialization Failed");
+
+            e.printStackTrace();
+
+            throw e;
         }
     }
 
     public static void quitDriver() {
 
-        if (getDriver() != null) {
+        try {
 
-            logger.info("Closing Browser Session");
+            if (getDriver() != null) {
 
-            getDriver().quit();
+                logger.info("Closing Browser Session");
 
-            driver.remove();
+                getDriver().quit();
+
+                driver.remove();
+            }
+
+        } catch (Exception e) {
+
+            logger.error("Error while closing browser");
+
+            e.printStackTrace();
         }
     }
 }
