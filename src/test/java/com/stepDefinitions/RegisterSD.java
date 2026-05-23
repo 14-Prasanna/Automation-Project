@@ -85,7 +85,19 @@ public class RegisterSD {
 
 	@Then("the user should see a warning message : First Name must be between one and thirtyTwo characters!")
 	public void the_user_should_see_a_warning_message_first_name_must_be_between_one_and_thirty_two_characters() {
-	   rpa.fieldEmptyWmsg();
+	   String actual=rpa.fieldEmptyWmsg();
+	   String exp="First Name must be between 1 and 32 characters!";
+	   
+	   try {
+		   Assert.assertTrue(actual.contains(exp));
+		   log.info("Error message Thrown Successfully");
+	   }catch(AssertionError e)
+	   {
+		   log.error("Error: "+e.getMessage());
+		   throw e;
+	   }
+		
+		
 	}
 
 

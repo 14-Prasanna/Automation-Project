@@ -15,28 +15,13 @@ import org.testng.annotations.DataProvider;
                 "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
                 "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
                 "rerun:target/failedrerun.txt"},
-
-
-
-          
-
-
-        
-
-        
-
-
-
-          tags="@AddReview and @Rest and @Logout",
-
         monochrome = true
 ) 
 
 
 public class TestNgRunner extends AbstractTestNGCucumberTests {
-	
     @Override
-    @DataProvider(parallel = true)
+    @DataProvider(parallel = false)
     public Object[][] scenarios() {
         return super.scenarios();
     }
