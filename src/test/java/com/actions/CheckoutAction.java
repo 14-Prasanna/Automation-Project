@@ -218,4 +218,7 @@ public class CheckoutAction extends BaseAction {
         return wait.until(ExpectedConditions.visibilityOf(checkoutPage.emptyCartMessage))
                 .isDisplayed();
     }
+    public String getConfirmOrder() {
+    	return wait.until(ExpectedConditions.visibilityOf(checkoutPage.confirmMessage)).getText();
+    }
 }

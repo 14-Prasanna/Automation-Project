@@ -15,10 +15,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DriverClass {
 
-    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static final ThreadLocal<WebDriver> driver =
+            new ThreadLocal<>();
 
     private static final Logger logger =
             LogManager.getLogger(DriverClass.class);
@@ -42,30 +45,102 @@ public class DriverClass {
         logger.info("Initializing Browser : " + browser);
         logger.info("Headless Mode : " + headless);
 
+        // ==========================================
+        // CHROME DRIVER
+        // ==========================================
+
         if (browser.equalsIgnoreCase("chrome")) {
 
             WebDriverManager.chromedriver().setup();
 
             ChromeOptions options = new ChromeOptions();
 
+            // Browser Stability
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--remote-allow-origins=*");
+
+            // Disable Chrome Popups
+            options.addArguments("--disable-notifications");
+            options.addArguments("--disable-popup-blocking");
+            options.addArguments("--disable-save-password-bubble");
+            options.addArguments("--disable-password-generation");
+
+            // Disable Password Leak Detection Popup
+            options.addArguments(
+                    "--disable-features=PasswordLeakDetection"
+            );
+
+            // Disable Automation Banner
+            options.setExperimentalOption(
+                    "excludeSwitches",
+                    new String[]{"enable-automation"}
+            );
+
+            options.setExperimentalOption(
+                    "useAutomationExtension",
+                    false
+            );
+
+            // ==========================================
+            // CHROME PREFERENCES
+            // ==========================================
+
+            Map<String, Object> prefs = new HashMap<>();
+
+            // Disable Save Password Popup
+            prefs.put(
+                    "credentials_enable_service",
+                    false
+            );
+
+            prefs.put(
+                    "profile.password_manager_enabled",
+                    false
+            );
+
+            // Disable Password Leak Detection
+            prefs.put(
+                    "profile.password_manager_leak_detection",
+                    false
+            );
+
+            // Disable Notifications
+            prefs.put(
+                    "profile.default_content_setting_values.notifications",
+                    2
+            );
+
+            options.setExperimentalOption("prefs", prefs);
+
+            // ==========================================
+            // HEADLESS MODE
+            // ==========================================
+
             if (headless) {
 
                 options.addArguments("--headless=new");
                 options.addArguments("--window-size=1920,1080");
-                options.addArguments("--disable-notifications");
-                options.addArguments("--no-sandbox");
-                options.addArguments("--disable-dev-shm-usage");
+
             } else {
 
                 options.addArguments("--start-maximized");
             }
 
-            options.addArguments("--start-maximized");
             driver.set(new ChromeDriver(options));
 
-            logger.info("Chrome Browser Launched Successfully");
+            logger.info(
+                    "Chrome Browser Launched Successfully"
+            );
 
-        } else if (browser.equalsIgnoreCase("firefox")) {
+        }
+
+        // ==========================================
+        // FIREFOX DRIVER
+        // ==========================================
+
+        else if (browser.equalsIgnoreCase("firefox")) {
 
             WebDriverManager.firefoxdriver().setup();
 
@@ -80,15 +155,30 @@ public class DriverClass {
 
             driver.set(new FirefoxDriver(options));
 
-            logger.info("Firefox Browser Launched Successfully");
+            logger.info(
+                    "Firefox Browser Launched Successfully"
+            );
 
-        } else {
+        }
 
-            logger.error("Invalid Browser Name : " + browser);
+        // ==========================================
+        // INVALID BROWSER
+        // ==========================================
+
+        else {
+
+            logger.error(
+                    "Invalid Browser Name : " + browser
+            );
 
             throw new RuntimeException(
-                    "Invalid Browser Name : " + browser);
+                    "Invalid Browser Name : " + browser
+            );
         }
+
+        // ==========================================
+        // COMMON SETTINGS
+        // ==========================================
 
         getDriver().manage().timeouts()
                 .implicitlyWait(Duration.ofSeconds(10));

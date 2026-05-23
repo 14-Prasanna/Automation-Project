@@ -1,4 +1,4 @@
-@Logout
+@Jothika @Logout
 Feature: Logout account in the application -Jothika 13/05/2026
 Description:This feature is about the logout functionality of the application
 
