@@ -16,371 +16,377 @@ import java.time.Duration;
 
 public class CheckoutAction extends BaseAction {
 
+    CheckoutPage checkoutPage;
+    WebDriverWait wait;
+    JavascriptExecutor js;
 
-	CheckoutPage checkoutPage;
-	WebDriverWait wait;
-	JavascriptExecutor js;
+    public CheckoutAction() {
 
-	public CheckoutAction() {
+        checkoutPage = new CheckoutPage(DriverClass.getDriver());
 
-		checkoutPage = new CheckoutPage(DriverClass.getDriver());
+        wait = new WebDriverWait(
+                DriverClass.getDriver(),
+                Duration.ofSeconds(20));
 
-		wait = new WebDriverWait(
-				DriverClass.getDriver(),
-				Duration.ofSeconds(20));
+        js = (JavascriptExecutor) DriverClass.getDriver();
+    }
 
-		js = (JavascriptExecutor) DriverClass.getDriver();
-	}
+    // Login before checkout scenario
+    public void loginAsRegisteredUser() {
 
-	// Login before checkout scenario
-	public void loginAsRegisteredUser() {
+        DriverClass.getDriver().get(
+                "https://ecommerce-playground.lambdatest.io/index.php?route=account/login");
 
-		DriverClass.getDriver().get(
-				"https://ecommerce-playground.lambdatest.io/index.php?route=account/login");
+        if (DriverClass.getDriver()
+                .getCurrentUrl()
+                .contains("route=account/account")) {
 
-		if (DriverClass.getDriver()
-				.getCurrentUrl()
-				.contains("route=account/account")) {
+            System.out.println("Already logged in.");
+            return;
+        }
 
-			System.out.println("Already logged in.");
-			return;
-		}
+        LoginPageAction lpa = new LoginPageAction();
 
-		LoginPageAction lpa = new LoginPageAction();
+        lpa.enterEmailAndPass(
+                "testlogin@gmail.com",
+                "testlogin");
 
-		lpa.enterEmailAndPass(
-				"testlogin@gmail.com",
-				"testlogin");
+        lpa.clickLoginButton();
 
-		lpa.clickLoginButton();
+        String actual = lpa.LoginSuccessMsg();
+        String expected = "My Account";
 
-		String actual = lpa.LoginSuccessMsg();
-		String expected = "My Account";
+        Assert.assertEquals(
+                actual,
+                expected,
+                "Login failed!");
 
-		Assert.assertEquals(
-				actual,
-				expected,
-				"Login failed!");
+        System.out.println("Login successful");
+    }
 
-		System.out.println("Login successful");
-	}
+    public void clickHpProduct() {
 
-	public void clickHpProduct() {
+        wait.until(ExpectedConditions
+                .elementToBeClickable(checkoutPage.hpProductImage));
 
-		wait.until(ExpectedConditions
-				.elementToBeClickable(checkoutPage.hpProductImage));
+        click(checkoutPage.hpProductImage);
+    }
 
-		click(checkoutPage.hpProductImage);
-	}
+    public void clickShoppingCartFromPopup() {
 
-	public void clickShoppingCartFromPopup() {
+        wait.until(ExpectedConditions
+                .visibilityOf(checkoutPage.productPageCheckoutBtn1))
+                .click();
 
-		wait.until(ExpectedConditions
-				.visibilityOf(checkoutPage.productPageCheckoutBtn1))
-				.click();
+        wait.until(ExpectedConditions
+                .elementToBeClickable(checkoutPage.shoppingCartPopupLink));
 
-		wait.until(ExpectedConditions
-				.elementToBeClickable(checkoutPage.shoppingCartPopupLink));
+        js.executeScript(
+                "arguments[0].click();",
+                checkoutPage.shoppingCartPopupLink);
 
-		js.executeScript(
-				"arguments[0].click();",
-				checkoutPage.shoppingCartPopupLink);
+        System.out.println("Clicked Shopping Cart link from popup");
+    }
 
-		System.out.println("Clicked Shopping Cart link from popup");
-	}
+    public void clickCheckoutFromCartPage()
+            throws InterruptedException {
 
-	public void clickCheckoutFromCartPage()
-			throws InterruptedException {
+        wait.until(ExpectedConditions
+                .elementToBeClickable(checkoutPage.cartPageCheckoutBtn));
 
-		wait.until(ExpectedConditions
-				.elementToBeClickable(checkoutPage.cartPageCheckoutBtn));
+        js.executeScript(
+                "arguments[0].click();",
+                checkoutPage.cartPageCheckoutBtn);
+    }
 
-		js.executeScript(
-				"arguments[0].click();",
-				checkoutPage.cartPageCheckoutBtn);
-	}
+    public void clickNavbarCart() {
 
-	public void clickNavbarCart() {
+        By navCartDiv = By.xpath(
+                "//div[@id='entry_217825']//div[@class='icon svg-icon']");
 
-		By navCartDiv = By.xpath(
-				"//div[@id='entry_217825']//div[@class='icon svg-icon']");
+        WebElement cartDiv = wait.until(
+                ExpectedConditions.elementToBeClickable(navCartDiv));
 
-		WebElement cartDiv = wait.until(
-				ExpectedConditions.elementToBeClickable(navCartDiv));
+        new Actions(DriverClass.getDriver())
+                .moveToElement(cartDiv)
+                .click()
+                .perform();
+    }
 
-		new Actions(DriverClass.getDriver())
-				.moveToElement(cartDiv)
-				.click()
-				.perform();
-	}
+    public void clickSidebarCheckout() {
 
-	public void clickSidebarCheckout() {
+        By checkoutLink = By.xpath(
+                "//a[normalize-space()='Checkout']");
 
-		By checkoutLink = By.xpath(
-				"//a[normalize-space()='Checkout']");
+        WebElement btn = wait.until(
+                ExpectedConditions.elementToBeClickable(checkoutLink));
 
-		WebElement btn = wait.until(
-				ExpectedConditions.elementToBeClickable(checkoutLink));
+        js.executeScript(
+                "arguments[0].click();",
+                btn);
+    }
 
-		js.executeScript(
-				"arguments[0].click();",
-				btn);
-	}
+    public boolean isCheckoutOrLoginPageDisplayed() {
 
-	public boolean isCheckoutOrLoginPageDisplayed() {
+        String currentUrl = DriverClass.getDriver().getCurrentUrl();
 
-		String currentUrl = DriverClass.getDriver().getCurrentUrl();
+        return currentUrl.contains("checkout")
+                || currentUrl.contains("account/login");
+    }
 
-		return currentUrl.contains("checkout")
-				|| currentUrl.contains("account/login");
-	}
+    public void selectNewAddress() {
 
-	public void selectNewAddress() {
+        waitForCheckoutPageToLoad();
 
-		waitForCheckoutPageToLoad();
+        By newAddressRadio = By.xpath(
+                "//label[@for = 'input-payment-address-new']");
 
-		By newAddressRadio = By.xpath(
-				"//label[@for = 'input-payment-address-new']");
+        WebElement radio = wait.until(
+                ExpectedConditions.elementToBeClickable(newAddressRadio));
 
-		WebElement radio = wait.until(
-				ExpectedConditions.elementToBeClickable(newAddressRadio));
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center'});",
+                radio);
 
-		js.executeScript(
-				"arguments[0].scrollIntoView({block:'center'});",
-				radio);
+        if (!radio.isSelected()) {
 
-		if (!radio.isSelected()) {
+            js.executeScript(
+                    "arguments[0].click();",
+                    radio);
+        }
 
-			js.executeScript(
-					"arguments[0].click();",
-					radio);
-		}
+        System.out.println("Selected: I want to use a new address");
+    }
 
-		System.out.println("Selected: I want to use a new address");
-	}
+    public boolean isEmptyCartMessageDisplayed() {
 
-	public void selectRegisterAccount() {
+        return wait.until(
+                ExpectedConditions.visibilityOf(
+                        checkoutPage.emptyCartMessage))
+                .isDisplayed();
+    }
 
-		waitForCheckoutPageToLoad();
+    public String getConfirmOrder() {
 
-		By registerRadio = By.xpath(
-				"//label[@for = 'input-account-register']");
+        return wait.until(
+                ExpectedConditions.visibilityOf(
+                        checkoutPage.confirmMessage))
+                .getText();
+    }
 
-		WebElement radio = wait.until(
-				ExpectedConditions.elementToBeClickable(registerRadio));
+    public void selectRegisterAccount() {
 
-		js.executeScript(
-				"arguments[0].scrollIntoView({block:'center'});",
-				radio);
+        waitForCheckoutPageToLoad();
 
-		if (!radio.isSelected()) {
+        By registerRadio = By.xpath(
+                "//label[@for = 'input-account-register']");
 
-			js.executeScript(
-					"arguments[0].click();",
-					radio);
-		}
+        WebElement radio = wait.until(
+                ExpectedConditions.elementToBeClickable(registerRadio));
 
-		System.out.println("Selected: Register Account");
-	}
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center'});",
+                radio);
 
-	// Wait for checkout page
-	private void waitForCheckoutPageToLoad() {
+        if (!radio.isSelected()) {
 
-		wait.until(ExpectedConditions.urlContains("checkout"));
+            js.executeScript(
+                    "arguments[0].click();",
+                    radio);
+        }
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(
-				By.xpath(
-						"//form[contains(@id,'form')] | //div[contains(@class,'checkout')]")));
-	}
+        System.out.println("Selected: Register Account");
+    }
 
-	// Fill Billing Address
-	public void enterBillingDetails(
-			String firstName,
-			String lastName,
-			String company,
-			String address1,
-			String city,
-			String postcode,
-			String country,
-			String region) {
+    // Wait for checkout page
+    private void waitForCheckoutPageToLoad() {
 
-		wait.until(ExpectedConditions
-				.visibilityOf(checkoutPage.firstNameInput));
+        wait.until(ExpectedConditions.urlContains("checkout"));
 
-		sendKeys(checkoutPage.firstNameInput, firstName);
-		sendKeys(checkoutPage.lastNameInput, lastName);
-		sendKeys(checkoutPage.companyInput, company);
-		sendKeys(checkoutPage.address1Input, address1);
-		sendKeys(checkoutPage.cityInput, city);
-		sendKeys(checkoutPage.postcodeInput, postcode);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath(
+                        "//form[contains(@id,'form')] | //div[contains(@class,'checkout')]")));
+    }
 
-		new Select(checkoutPage.countrySelect)
-				.selectByVisibleText(country);
+    // Fill Billing Address
+    public void enterBillingDetails(
+            String firstName,
+            String lastName,
+            String company,
+            String address1,
+            String city,
+            String postcode,
+            String country,
+            String region) {
 
-		wait.until(ExpectedConditions
-				.elementToBeClickable(checkoutPage.regionStateSelect));
+        wait.until(ExpectedConditions
+                .visibilityOf(checkoutPage.firstNameInput));
 
-		new Select(checkoutPage.regionStateSelect)
-				.selectByVisibleText(region);
-	}
+        sendKeys(checkoutPage.firstNameInput, firstName);
+        sendKeys(checkoutPage.lastNameInput, lastName);
+        sendKeys(checkoutPage.companyInput, company);
+        sendKeys(checkoutPage.address1Input, address1);
+        sendKeys(checkoutPage.cityInput, city);
+        sendKeys(checkoutPage.postcodeInput, postcode);
 
-	public void clickSameBillingAddress() {
+        new Select(checkoutPage.countrySelect)
+                .selectByVisibleText(country);
 
-		By sameAddrLabel = By.xpath(
-				"//label[@for='input-shipping-address-same']");
+        wait.until(ExpectedConditions
+                .elementToBeClickable(checkoutPage.regionStateSelect));
 
-		WebElement label = wait.until(
-				ExpectedConditions.elementToBeClickable(sameAddrLabel));
+        new Select(checkoutPage.regionStateSelect)
+                .selectByVisibleText(region);
+    }
 
-		js.executeScript(
-				"arguments[0].scrollIntoView({block:'center'});",
-				label);
+    public void clickSameBillingAddress() {
 
-		if (!checkoutPage.sameBillingAddressCheckbox.isSelected()) {
+        By sameAddrLabel = By.xpath(
+                "//label[@for='input-shipping-address-same']");
 
-			js.executeScript(
-					"arguments[0].click();",
-					label);
-		}
-	}
+        WebElement label = wait.until(
+                ExpectedConditions.elementToBeClickable(sameAddrLabel));
 
-	public void selectCashOnDelivery() {
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center'});",
+                label);
 
-		By codLabel = By.xpath(
-				"//label[@for='input-payment-method-cod']");
+        if (!checkoutPage.sameBillingAddressCheckbox.isSelected()) {
 
-		WebElement label = wait.until(
-				ExpectedConditions.elementToBeClickable(codLabel));
+            js.executeScript(
+                    "arguments[0].click();",
+                    label);
+        }
+    }
 
-		js.executeScript(
-				"arguments[0].scrollIntoView({block:'center'});",
-				label);
+    public void selectCashOnDelivery() {
 
-		js.executeScript(
-				"arguments[0].click();",
-				label);
-	}
+        By codLabel = By.xpath(
+                "//label[@for='input-payment-method-cod']");
 
-	public void selectFlatRate() {
+        WebElement label = wait.until(
+                ExpectedConditions.elementToBeClickable(codLabel));
 
-		By flatLabel = By.xpath(
-				"//label[@for='input-shipping-method-flat.flat']");
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center'});",
+                label);
 
-		WebElement label = wait.until(
-				ExpectedConditions.elementToBeClickable(flatLabel));
+        js.executeScript(
+                "arguments[0].click();",
+                label);
+    }
 
-		js.executeScript(
-				"arguments[0].scrollIntoView({block:'center'});",
-				label);
+    public void selectFlatRate() {
 
-		js.executeScript(
-				"arguments[0].click();",
-				label);
-	}
+        By flatLabel = By.xpath(
+                "//label[@for='input-shipping-method-flat.flat']");
 
-	public void clickTermsAndConditions() {
+        WebElement label = wait.until(
+                ExpectedConditions.elementToBeClickable(flatLabel));
 
-		By termsLabel = By.xpath(
-				"//label[@for='input-agree']");
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center'});",
+                label);
 
-		WebElement label = wait.until(
-				ExpectedConditions.elementToBeClickable(termsLabel));
+        js.executeScript(
+                "arguments[0].click();",
+                label);
+    }
 
-		js.executeScript(
-				"arguments[0].scrollIntoView({block:'center'});",
-				label);
+    public void clickTermsAndConditions() {
 
-		js.executeScript(
-				"arguments[0].click();",
-				label);
-	}
+        By termsLabel = By.xpath(
+                "//label[@for='input-agree']");
 
-	public void continueCheckout() {
+        WebElement label = wait.until(
+                ExpectedConditions.elementToBeClickable(termsLabel));
 
-		wait.until(ExpectedConditions
-				.elementToBeClickable(checkoutPage.continueCheckoutBtn));
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center'});",
+                label);
 
-		js.executeScript(
-				"arguments[0].click();",
-				checkoutPage.continueCheckoutBtn);
-	}
+        js.executeScript(
+                "arguments[0].click();",
+                label);
+    }
 
-	public boolean isOrderPlacedSuccessfully() {
+    public void continueCheckout() {
 
-		wait.until(ExpectedConditions
-				.visibilityOf(checkoutPage.confirm))
-				.click();
+        wait.until(ExpectedConditions
+                .elementToBeClickable(checkoutPage.continueCheckoutBtn));
 
-		return wait.until(ExpectedConditions
-				.visibilityOf(checkoutPage.orderConfirmationMessage))
-				.isDisplayed();
-	}
+        js.executeScript(
+                "arguments[0].click();",
+                checkoutPage.continueCheckoutBtn);
+    }
 
-	public void enterRegistrationDetails(
-			String firstName,
-			String lastName,
-			String email,
-			String telephone,
-			String password,
-			String confirmPassword,
-			String company,
-			String address1,
-			String address2,
-			String city,
-			String postCode,
-			String country,
-			String region) {
+    public boolean isOrderPlacedSuccessfully() {
 
-		wait.until(ExpectedConditions
-				.visibilityOf(checkoutPage.regFirstNameInput));
+        wait.until(ExpectedConditions
+                .visibilityOf(checkoutPage.confirm))
+                .click();
 
-		sendKeys(checkoutPage.regFirstNameInput, firstName);
-		sendKeys(checkoutPage.regLastNameInput, lastName);
-		sendKeys(checkoutPage.regEmailInput, email);
-		sendKeys(checkoutPage.regTelephoneInput, telephone);
-		sendKeys(checkoutPage.regPasswordInput, password);
-		sendKeys(checkoutPage.regConfirmPasswordInput, confirmPassword);
-		sendKeys(checkoutPage.regCompanyInput, company);
-		sendKeys(checkoutPage.regAddress1Input, address1);
-		sendKeys(checkoutPage.regAddress2Input, address2);
-		sendKeys(checkoutPage.regCityInput, city);
-		sendKeys(checkoutPage.regPostcodeInput, postCode);
+        return wait.until(ExpectedConditions
+                .visibilityOf(checkoutPage.orderConfirmationMessage))
+                .isDisplayed();
+    }
 
-		new Select(checkoutPage.regCountrySelect)
-				.selectByVisibleText(country);
+    public void enterRegistrationDetails(
+            String firstName,
+            String lastName,
+            String email,
+            String telephone,
+            String password,
+            String confirmPassword,
+            String company,
+            String address1,
+            String address2,
+            String city,
+            String postCode,
+            String country,
+            String region) {
 
-		wait.until(driver ->
-				new Select(checkoutPage.regRegionStateSelect)
-						.getOptions()
-						.size() > 1);
+        wait.until(ExpectedConditions
+                .visibilityOf(checkoutPage.regFirstNameInput));
 
-		new Select(checkoutPage.regRegionStateSelect)
-				.selectByVisibleText(region);
-	}
+        sendKeys(checkoutPage.regFirstNameInput, firstName);
+        sendKeys(checkoutPage.regLastNameInput, lastName);
+        sendKeys(checkoutPage.regEmailInput, email);
+        sendKeys(checkoutPage.regTelephoneInput, telephone);
+        sendKeys(checkoutPage.regPasswordInput, password);
+        sendKeys(checkoutPage.regConfirmPasswordInput, confirmPassword);
+        sendKeys(checkoutPage.regCompanyInput, company);
+        sendKeys(checkoutPage.regAddress1Input, address1);
+        sendKeys(checkoutPage.regAddress2Input, address2);
+        sendKeys(checkoutPage.regCityInput, city);
+        sendKeys(checkoutPage.regPostcodeInput, postCode);
 
-	public void agreeToPrivacyPolicy() {
+        new Select(checkoutPage.regCountrySelect)
+                .selectByVisibleText(country);
 
-		By privacyLabel = By.xpath(
-				"//label[@for='input-account-agree']");
+        wait.until(driver ->
+                new Select(checkoutPage.regRegionStateSelect)
+                        .getOptions()
+                        .size() > 1);
 
-		WebElement label = wait.until(
-				ExpectedConditions.elementToBeClickable(privacyLabel));
+        new Select(checkoutPage.regRegionStateSelect)
+                .selectByVisibleText(region);
+    }
 
-		js.executeScript(
-				"arguments[0].scrollIntoView({block:'center'});",
-				label);
+    public void agreeToPrivacyPolicy() {
 
-		js.executeScript(
-				"arguments[0].click();",
-				label);
-	}
+        By privacyLabel = By.xpath(
+                "//label[@for='input-account-agree']");
 
-	public boolean isEmptyCartMessageDisplayed() {
+        WebElement label = wait.until(
+                ExpectedConditions.elementToBeClickable(privacyLabel));
 
-		return wait.until(
-				ExpectedConditions.visibilityOf(
-						checkoutPage.emptyCartMessage))
-				.isDisplayed();
-	}
+        js.executeScript(
+                "arguments[0].scrollIntoView({block:'center'});",
+                label);
+
+        js.executeScript(
+                "arguments[0].click();",
+                label);
+    }
 }
-   

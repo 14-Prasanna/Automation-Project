@@ -28,8 +28,8 @@ public class CartPageActions {
 
 	public void sendQuantity(String q) {
 		ba.waitForVisibility(cp.quantityCount);
-		ba.sendKeys(cp.quantityCount,q);
-		
+		ba.sendKeys(cp.quantityCount, q);
+
 	}
 
 	public void clickQUpdateButton() {
@@ -71,8 +71,10 @@ public class CartPageActions {
 		int countryIndex = Integer.parseInt(data.get(0).get("country"));
 		int stateIndex = Integer.parseInt(data.get(0).get("state"));
 		Select country = new Select(cp.dropDownopt1);
+		ba.click(cp.dropDownopt1);
 		country.selectByIndex(countryIndex);
 		Select state = new Select(cp.dropDownopt2);
+		ba.click(cp.dropDownopt2);
 		state.selectByIndex(stateIndex);
 	}
 
@@ -129,11 +131,11 @@ public class CartPageActions {
 	    return cp.getProductName();
 	}
 	 
-	 public void quantitySend(DataTable db)
-	 {
+
+	public void quantitySend(DataTable db) {
 		wait.until(ExpectedConditions.visibilityOf(cp.quantityCount));
 		List<Map<String, String>> data = db.asMaps(String.class, String.class);
-		ba.sendKeys(cp.quantityCount,data.get(0).get("quantity"));
-	 }
+		ba.sendKeys(cp.quantityCount, data.get(0).get("quantity"));
+	}
 
 }
