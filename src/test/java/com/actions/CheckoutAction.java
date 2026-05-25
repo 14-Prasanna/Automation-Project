@@ -165,6 +165,22 @@ public class CheckoutAction extends BaseAction {
                 "Selected: I want to use a new address");
     }
 
+    public boolean isEmptyCartMessageDisplayed() {
+
+        return wait.until(
+                ExpectedConditions.visibilityOf(
+                        checkoutPage.emptyCartMessage))
+                .isDisplayed();
+    }
+
+    public String getConfirmOrder() {
+
+        return wait.until(
+                ExpectedConditions.visibilityOf(
+                        checkoutPage.confirmMessage))
+                .getText();
+    }
+
     public void selectRegisterAccount() {
 
         waitForCheckoutPageToLoad();
@@ -386,13 +402,5 @@ public class CheckoutAction extends BaseAction {
         js.executeScript(
                 "arguments[0].click();",
                 label);
-    }
-
-    public boolean isEmptyCartMessageDisplayed() {
-
-        return wait.until(
-                ExpectedConditions.visibilityOf(
-                        checkoutPage.emptyCartMessage))
-                .isDisplayed();
     }
 }

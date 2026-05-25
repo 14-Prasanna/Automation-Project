@@ -28,71 +28,79 @@ public class Hooks {
         log.info("Browser launched successfully");
     }
 
-    @After
-    public void tearDown(Scenario scenario) {
+    	@After
+    	public void tearDown(Scenario scenario) {
 
-        try {
+    	    try {
 
-            if (DriverClass.getDriver() == null) {
+    	        if (DriverClass.getDriver() == null) {
 
-                log.error("Driver is NULL. Skipping screenshot and quit.");
-                return;
-            }
+    	            log.error("Driver is NULL. Skipping screenshot and quit.");
+    	            return;
+    	        }
 
-            if (scenario.isFailed()) {
+    	        if (scenario.isFailed()) {
 
-                try {
+    	            try {
 
-                    // Create screenshots folder
-                    File screenshotFolder = new File("screenshots");
+    	                // Create screenshots folder
+    	                File screenshotFolder = new File("screenshots");
 
-                    if (!screenshotFolder.exists()) {
+    	                if (!screenshotFolder.exists()) {
 
-                        screenshotFolder.mkdirs();
-                    }
+    	                    screenshotFolder.mkdirs();
+    	                }
 
-                    // Capture screenshot file
-                    File screenshot =
-                            ((TakesScreenshot) DriverClass.getDriver())
-                                    .getScreenshotAs(OutputType.FILE);
+    	                // Capture screenshot file
+    	                File screenshot =
+    	                        ((TakesScreenshot) DriverClass.getDriver())
+    	                                .getScreenshotAs(OutputType.FILE);
 
-                    File destinationFile = new File(
-                            "screenshots/"
-                                    + scenario.getName().replaceAll(" ", "_")
-                                    + ".png");
+    	                // Destination path
+    	                File destinationFile =
+    	                        new File(
+    	                                "screenshots/"
+    	                                + scenario.getName()
+    	                                .replaceAll(" ", "_")
+    	                                + ".png");
 
-                    FileUtils.copyFile(screenshot, destinationFile);
+    	                // Copy screenshot
+    	                FileUtils.copyFile(
+    	                        screenshot,
+    	                        destinationFile);
 
-                    // Attach screenshot to report
-                    byte[] screenshotBytes =
-                            ((TakesScreenshot) DriverClass.getDriver())
-                                    .getScreenshotAs(OutputType.BYTES);
+    	                // Attach screenshot to report
+    	                byte[] screenshotBytes =
+    	                        ((TakesScreenshot) DriverClass.getDriver())
+    	                                .getScreenshotAs(OutputType.BYTES);
 
-                    scenario.attach(
-                            screenshotBytes,
-                            "image/png",
-                            "Failure Screenshot");
+    	                scenario.attach(
+    	                        screenshotBytes,
+    	                        "image/png",
+    	                        "Failure Screenshot");
 
-                    log.error("Scenario Failed : "
-                            + scenario.getName());
+    	                log.error(
+    	                        "Scenario Failed : "
+    	                        + scenario.getName());
 
-                } catch (IOException e) {
+    	            } catch (IOException e) {
 
-                    log.error("Screenshot capture failed : "
-                            + e.getMessage());
-                }
+    	                log.error(
+    	                        "Screenshot capture failed : "
+    	                        + e.getMessage());
+    	            }
 
-            } else {
+    	        } else {
 
-                log.info("Scenario Passed : "
-                        + scenario.getName());
-            }
+    	            log.info(
+    	                    "Scenario Passed : "
+    	                    + scenario.getName());
+    	        }
 
-        } finally {
+    	    } finally {
 
-            DriverClass.quitDriver();
+    	        DriverClass.quitDriver();
 
-            log.info("Browser closed successfully");
-        }
-    }
-}
+    	        log.info("Browser closed successfully");
+    	    }
+    	}}
