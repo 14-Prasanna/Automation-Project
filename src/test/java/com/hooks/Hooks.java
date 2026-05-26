@@ -30,7 +30,6 @@ public class Hooks {
     @After
     public void tearDown(Scenario scenario) {
 
-
         try {
 
             // CHECK DRIVER NULL
@@ -43,45 +42,59 @@ public class Hooks {
 
                 if (!screenshotFolder.exists()) {
 
-        if (DriverClass.getDriver() == null) {
-            log.error("Driver is NULL. Skipping screenshot and quit.");
-            return;
-        }
-
-        if (scenario.isFailed()) {
-
-            try {
-                File screenshot = ((TakesScreenshot) DriverClass.getDriver())
-                        .getScreenshotAs(OutputType.FILE);
-
-                File destinationFile = new File(
-                        "screenshots/" +
-                                scenario.getName().replaceAll(" ", "_")
-                                + ".png");
-
-                destinationFile.getParentFile().mkdirs();
-
-
                     screenshotFolder.mkdirs();
                 }
 
-                byte[] screenshotBytes = ((TakesScreenshot) DriverClass.getDriver())
-                        .getScreenshotAs(OutputType.BYTES);
+                // TAKE SCREENSHOT FILE
+                File screenshot =
+                        ((TakesScreenshot) DriverClass.getDriver())
+                                .getScreenshotAs(OutputType.FILE);
 
-                scenario.attach(screenshotBytes, "image/png", "Failure Screenshot");
+                // DESTINATION
+                File destinationFile =
+                        new File(
+                                "screenshots/"
+                                + scenario.getName()
+                                .replaceAll(" ", "_")
+                                + ".png");
+
+                // COPY FILE
+                FileUtils.copyFile(
+                        screenshot,
+                        destinationFile);
+
+                // ATTACH TO CUCUMBER REPORT
+                byte[] screenshotBytes =
+                        ((TakesScreenshot) DriverClass.getDriver())
+                                .getScreenshotAs(OutputType.BYTES);
+
+                scenario.attach(
+                        screenshotBytes,
+                        "image/png",
+                        "Failure Screenshot");
 
                 log.error("Scenario Failed : "
                         + scenario.getName());
 
-            } catch (IOException e) {
-                log.error("Screenshot capture failed : " + e.getMessage());
+            } else {
+
+                log.info("Scenario Passed : "
+                        + scenario.getName());
             }
 
-        } else {
-            log.info("Scenario Passed : " + scenario.getName());
+        } catch (IOException e) {
+
+            log.error("Screenshot capture failed : "
+                    + e.getMessage());
+
+        } catch (Exception e) {
+
+            log.error("Error in tearDown : "
+                    + e.getMessage());
         }
 
         DriverClass.quitDriver();
+
         log.info("Browser closed successfully");
     }
 }
