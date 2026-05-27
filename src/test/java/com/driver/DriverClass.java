@@ -15,120 +15,177 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+
 public class DriverClass {
 
-    private static final ThreadLocal<WebDriver> driver =
-            new ThreadLocal<>();
+	private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-    private static final Logger logger =
-            LogManager.getLogger(DriverClass.class);
+	private static final Logger logger = LogManager.getLogger(DriverClass.class);
 
-    public static WebDriver getDriver() {
+	public static WebDriver getDriver() {
 
-        return driver.get();
-    }
+		return driver.get();
+	}
 
-    public static void initDriver() {
+	public static void initDriver() {
 
-        try {
+		try {
 
-            String browser =
-                    ConfigReader.getProperties()
-                            .getProperty("browser");
+			String browser = ConfigReader.getProperties().getProperty("browser");
 
-            String headlessValue =
-                    ConfigReader.getProperties()
-                            .getProperty("headless");
+			String headlessValue = ConfigReader.getProperties().getProperty("headless");
 
-            boolean headless =
-                    headlessValue != null
-                    && headlessValue.equalsIgnoreCase("true");
+			boolean headless = headlessValue != null && headlessValue.equalsIgnoreCase("true");
 
-            logger.info("Initializing Browser: "
-                    + browser);
+			logger.info("Initializing Browser : " + browser);
 
-            logger.info("Headless Mode: "
-                    + headless);
+			logger.info("Headless Mode : " + headless);
 
-            // CHROME
-            if (browser.equalsIgnoreCase("chrome")) {
+			// ==========================================
+			// CHROME DRIVER
+			// ==========================================
 
-                WebDriverManager.chromedriver().setup();
+			if (browser.equalsIgnoreCase("chrome")) {
 
-                ChromeOptions options =
-                        new ChromeOptions();
+				WebDriverManager.chromedriver().setup();
 
-                if (headless) {
+				ChromeOptions options = new ChromeOptions();
 
-                    options.addArguments("--headless=new");
-                }
+				// Browser Stability
+				options.addArguments("--no-sandbox");
+				options.addArguments("--disable-dev-shm-usage");
+				options.addArguments("--disable-gpu");
+				options.addArguments("--remote-allow-origins=*");
 
-                options.addArguments("--start-maximized");
+				// Disable Chrome Popups
+				options.addArguments("--disable-notifications");
+				options.addArguments("--disable-popup-blocking");
+				options.addArguments("--disable-save-password-bubble");
+				options.addArguments("--disable-password-generation");
 
-                driver.set(new ChromeDriver(options));
+				// Disable Password Leak Detection Popup
+				options.addArguments("--disable-features=PasswordLeakDetection");
 
-            }
+				// Disable Automation Banner
+				options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
 
-            // FIREFOX
-            else if (browser.equalsIgnoreCase("firefox")) {
+				options.setExperimentalOption("useAutomationExtension", false);
 
-                WebDriverManager.firefoxdriver().setup();
+				// ==========================================
+				// CHROME PREFERENCES
+				// ==========================================
 
-                FirefoxOptions options =
-                        new FirefoxOptions();
+				Map<String, Object> prefs = new HashMap<>();
 
-                // IMPORTANT FIX
-                if (headless) {
+				// Disable Save Password Popup
+				prefs.put("credentials_enable_service", false);
 
-                    options.addArguments("-headless");
-                }
+				prefs.put("profile.password_manager_enabled", false);
 
-                driver.set(new FirefoxDriver(options));
-            }
+				// Disable Password Leak Detection
+				prefs.put("profile.password_manager_leak_detection", false);
 
-            // INVALID BROWSER
-            else {
+				// Disable Notifications
+				prefs.put("profile.default_content_setting_values.notifications", 2);
 
-                logger.error("Invalid Browser Name: "
-                        + browser);
+				options.setExperimentalOption("prefs", prefs);
 
-                throw new RuntimeException(
-                        "Invalid Browser Name: "
-                        + browser);
-            }
+				// ==========================================
+				// HEADLESS MODE
+				// ==========================================
 
-            getDriver().manage().window().maximize();
+				if (headless) {
 
-            logger.info("Browser launched successfully");
+					options.addArguments("--headless=new");
+					options.addArguments("--window-size=1920,1080");
 
-        } catch (Exception e) {
+				} else {
 
-            logger.error("Driver Initialization Failed");
+					options.addArguments("--start-maximized");
+				}
 
-            e.printStackTrace();
+				driver.set(new ChromeDriver(options));
 
-            throw e;
-        }
-    }
+				logger.info("Chrome Browser Launched Successfully");
+			}
 
-    public static void quitDriver() {
+			// ==========================================
+			// FIREFOX DRIVER
+			// ==========================================
 
-        try {
+			else if (browser.equalsIgnoreCase("firefox")) {
 
-            if (getDriver() != null) {
+				WebDriverManager.firefoxdriver().setup();
 
-                logger.info("Closing browser session");
+				FirefoxOptions options = new FirefoxOptions();
 
-                getDriver().quit();
+				if (headless) {
 
-                driver.remove();
-            }
+					options.addArguments("--headless");
+					options.addArguments("--width=1920");
+					options.addArguments("--height=1080");
+				}
 
-        } catch (Exception e) {
+				driver.set(new FirefoxDriver(options));
 
-            logger.error("Error while closing browser");
+				logger.info("Firefox Browser Launched Successfully");
+			}
 
-            e.printStackTrace();
-        }
-    }
+			// ==========================================
+			// INVALID BROWSER
+			// ==========================================
+
+			else {
+
+				logger.error("Invalid Browser Name : " + browser);
+
+				throw new RuntimeException("Invalid Browser Name : " + browser);
+			}
+
+			// ==========================================
+			// COMMON SETTINGS
+			// ==========================================
+
+			getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+			if (!headless) {
+
+				getDriver().manage().window().maximize();
+			}
+
+			logger.info("Browser launched successfully");
+
+		} catch (Exception e) {
+
+			logger.error("Driver Initialization Failed");
+
+			e.printStackTrace();
+
+			throw e;
+		}
+	}
+
+	public static void quitDriver() {
+
+		try {
+
+			if (getDriver() != null) {
+
+				logger.info("Closing Browser Session");
+
+				getDriver().quit();
+
+				driver.remove();
+			}
+
+		} catch (Exception e) {
+
+			logger.error("Error while closing browser");
+
+			e.printStackTrace();
+		}
+	}
 }

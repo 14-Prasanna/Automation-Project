@@ -1,7 +1,6 @@
 package com.hooks;
 
 import java.io.File;
-
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
@@ -23,7 +22,9 @@ public class Hooks {
 
     @Before
     public void setUp() {
-    	DriverClass.initDriver();
+
+        DriverClass.initDriver();
+
         log.info("Browser launched successfully");
     }
 
@@ -33,8 +34,15 @@ public class Hooks {
         try {
 
             // CHECK DRIVER NULL
-            if (scenario.isFailed()
-                    && DriverClass.getDriver() != null) {
+            if (DriverClass.getDriver() == null) {
+
+                log.error("Driver is NULL. Skipping screenshot and quit.");
+
+                return;
+            }
+
+            // IF SCENARIO FAILED
+            if (scenario.isFailed()) {
 
                 // CREATE SCREENSHOTS FOLDER
                 File screenshotFolder =
@@ -50,20 +58,17 @@ public class Hooks {
                         ((TakesScreenshot) DriverClass.getDriver())
                                 .getScreenshotAs(OutputType.FILE);
 
-                // DESTINATION
+                // DESTINATION PATH
                 File destinationFile =
-                        new File(
-                                "screenshots/"
+                        new File("screenshots/"
                                 + scenario.getName()
                                 .replaceAll(" ", "_")
                                 + ".png");
 
                 // COPY FILE
-                FileUtils.copyFile(
-                        screenshot,
-                        destinationFile);
+                FileUtils.copyFile(screenshot, destinationFile);
 
-                // ATTACH TO CUCUMBER REPORT
+                // ATTACH SCREENSHOT TO REPORT
                 byte[] screenshotBytes =
                         ((TakesScreenshot) DriverClass.getDriver())
                                 .getScreenshotAs(OutputType.BYTES);
@@ -86,13 +91,9 @@ public class Hooks {
 
             log.error("Screenshot capture failed : "
                     + e.getMessage());
-
-        } catch (Exception e) {
-
-            log.error("Error in tearDown : "
-                    + e.getMessage());
         }
 
+        // CLOSE DRIVER
         DriverClass.quitDriver();
 
         log.info("Browser closed successfully");
