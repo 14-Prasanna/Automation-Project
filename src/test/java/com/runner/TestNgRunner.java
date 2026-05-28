@@ -17,7 +17,7 @@ import org.testng.annotations.DataProvider;
 
                 "rerun:target/failedrerun.txt"
         },
-        tags = "@Search",
+        
 
         monochrome = true
 )
