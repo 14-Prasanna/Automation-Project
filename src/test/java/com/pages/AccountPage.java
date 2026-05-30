@@ -42,6 +42,22 @@ public class AccountPage extends BasePage {
 	@FindBy (xpath="//div[@class='col-sm-10']/child::input/following-sibling::div")
 	public WebElement errorMsgEI;
 	
+	@FindBy (xpath="//div[@class='row']/child::div[5]/child::a[contains(text(),'Subscribe')]")
+	public WebElement newsLetterSubscribe;
+	
+	@FindBy(id="input-newsletter-yes")
+	public WebElement yesRadioNewsLetter;
+	
+	@FindBy (xpath="//label[@for='input-newsletter-no']")
+	public WebElement noRadioBtn;
+	
+	@FindBy (xpath="//div[@class='buttons clearfix']/child::div[2]/child::input")
+	public WebElement clickContinueNL;
+	
+	@FindBy (xpath="//div[@id='account-account']/child::div[1]")
+	public WebElement sucessMsgNL;
+	
+	
 	
 	
 

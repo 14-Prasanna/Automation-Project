@@ -27,3 +27,13 @@ description:To verify the fuctionality of edit account information
       | fname | lname | email                |
       | Tamil | Arasu | tamilArasu@gmail.com |
     Then The user Should be thrown with a Warning message
+
+  @SubscribeNewsLetter
+  Scenario: As a registered user I want to Subscribe NewsLetter,So that I can receive email Regularly
+    When The user clicks on myAccount link in navBar
+    And The user Enters valid email and valid passwords
+    And Clicks on Login Button
+    And The User clicks on Subscribe newsletter Link in Account Page
+    And check the radio Button as yes
+    And Click The  Continue Button
+    Then The user Should be Successfully Subscribed and a Success Message should be Displayed

@@ -70,5 +70,35 @@ public class AccountPageAction {
 		ba.waitForVisibility(ap.errorMsgEI);
 		return ba.getText(ap.errorMsgEI);
 	}
-
+	
+	public void clickSubscribeNewsLetter()
+	{
+		ba.waitForVisibility(ap.newsLetterSubscribe);
+		ba.click(ap.newsLetterSubscribe);
+	}
+	
+	public void clickNlRadioButton()
+	{
+		try
+		{
+			ba.waitForVisibility(ap.yesRadioNewsLetter);
+			ba.click(ap.yesRadioNewsLetter);
+		}
+		catch(Exception e)
+		{
+			ba.waitForVisibility(ap.noRadioBtn);
+			ba.click(ap.noRadioBtn);
+		}
+	}
+	
+	public void clickNlContinueBtn()
+	{
+		ba.click(ap.clickContinueNL);
+	}
+	public String successMsgNLSubscribe()
+	{
+		ba.waitForVisibility(ap.sucessMsgNL);
+		return ba.getText(ap.sucessMsgNL);
+	}
 }
+

@@ -112,4 +112,33 @@ public class AccountSD {
 		}
 
 	}
+	@When("The User clicks on Subscribe newsletter Link in Account Page")
+	public void the_user_clicks_on_subscribe_newsletter_link_in_account_page() {
+	   apa.clickSubscribeNewsLetter();
+	}
+
+	@When("check the radio Button as yes")
+	public void check_the_radio_button_as_yes() {
+	    apa.clickNlRadioButton();
+	}
+
+	@When("Click The  Continue Button")
+	public void click_the_continue_button() {
+	    apa.clickNlContinueBtn();
+	}
+
+	@Then("The user Should be Successfully Subscribed and a Success Message should be Displayed")
+	public void the_user_should_be_successfully_subscribed_and_a_success_message_should_be_displayed() {
+		try {
+			String actual = apa.successMsgNLSubscribe();
+			String expected = "Success: Your newsletter subscription has been successfully updated!";
+			Assert.assertTrue(actual.contains(expected));
+			log.info("Success Message Displayed");
+		}
+		catch(AssertionError e)
+		{
+			log.error("Success message Not Dispalyed"+e.getMessage());
+			throw e;
+		}
+	}
 }
