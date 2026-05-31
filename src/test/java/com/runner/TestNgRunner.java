@@ -15,7 +15,7 @@ import org.testng.annotations.DataProvider;
 				"rerun:target/failedrerun.txt" },
 
 
-		tags = "@Smoke or @Search or @WishlistFeature",
+		tags = "@E2E",
 	
         monochrome = true
 )
