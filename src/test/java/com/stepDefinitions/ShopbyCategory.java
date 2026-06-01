@@ -2,36 +2,31 @@ package com.stepDefinitions;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 import com.actions.LaunchPageAction;
-import com.actions.ShopByCategoryAction;
-import com.driver.DriverClass;
+import com.actions.ShopbyCategoryAction;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class ShopByCategory {
+public class ShopbyCategory {
 
     private static final Logger log =
-            LogManager.getLogger(ShopByCategory.class);
-
-    WebDriver driver = DriverClass.getDriver();
+            LogManager.getLogger(ShopbyCategory.class);
 
     LaunchPageAction lpa = new LaunchPageAction();
 
-    ShopByCategoryAction sbc =
-            new ShopByCategoryAction();
+    ShopbyCategoryAction sbc =
+            new ShopbyCategoryAction();
 
     @Given("the user launches the ecommerce application")
     public void the_user_launches_the_ecommerce_application() {
 
         sbc.launchWebUrl();
 
-        log.info(
-                "Application launched successfully");
+        log.info("Application launched successfully");
     }
 
     @When("the user clicks on the Shop by Category menu")
@@ -39,49 +34,38 @@ public class ShopByCategory {
 
         sbc.clickShopByCategory();
 
-        log.info(
-                "Clicked Shop By Category");
+        log.info("Clicked Shop By Category Menu");
     }
 
     @When("the user selects the {string} category")
-    public void the_user_selects_the_category(
-            String category) {
+    public void the_user_selects_the_category(String category) {
 
         sbc.selectCategory(category);
 
-        log.info(
-                "Selected Category : " + category);
+        log.info("Selected Category : {}", category);
     }
 
     @Then("the user should navigate to the Category page and the page title should contain {string}")
     public void the_user_should_navigate_to_the_category_page_and_the_page_title_should_contain(
             String expectedTitle) {
 
-        String actualTitle =
-                sbc.getPageTitle();
+        String actualTitle = sbc.getPageTitle();
 
         try {
 
             Assert.assertTrue(
                     actualTitle.contains(expectedTitle),
-
                     "Expected title to contain : "
                             + expectedTitle
                             + " But found : "
                             + actualTitle);
 
-            log.info(
-                    "Navigated successfully to category page");
-
-            log.info(
-                    "Actual Page Title : "
-                            + actualTitle);
+            log.info("Navigated successfully to category page");
+            log.info("Actual Page Title : {}", actualTitle);
 
         } catch (AssertionError e) {
 
-            log.error(
-                    "Navigation failed : "
-                            + e.getMessage());
+            log.error("Navigation failed", e);
 
             throw e;
         }

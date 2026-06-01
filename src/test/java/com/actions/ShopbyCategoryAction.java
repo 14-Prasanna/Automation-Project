@@ -10,172 +10,175 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.driver.DriverClass;
 import com.pages.LaunchPages;
-import com.pages.ShopByCategoryPage;
+import com.pages.ShopbyCategoryPage;
 import com.utils.ConfigReader;
 
-public class ShopByCategoryAction {
+public class ShopbyCategoryAction {
 
-	private static final Logger log =
-			LogManager.getLogger(ShopByCategoryAction.class);
+    private static final Logger log =
+            LogManager.getLogger(ShopbyCategoryAction.class);
 
-	WebDriverWait wait =
-			new WebDriverWait(
-					DriverClass.getDriver(),
-					Duration.ofSeconds(20));
+    WebDriverWait wait =
+            new WebDriverWait(
+                    DriverClass.getDriver(),
+                    Duration.ofSeconds(20));
 
-	LaunchPages lp =
-			new LaunchPages(DriverClass.getDriver());
+    LaunchPages lp =
+            new LaunchPages(DriverClass.getDriver());
 
-	ShopByCategoryPage sbcp =
-			new ShopByCategoryPage(
-					DriverClass.getDriver());
+    ShopbyCategoryPage sbcp =
+            new ShopbyCategoryPage(
+                    DriverClass.getDriver());
 
-	public void launchWebUrl() {
+    public void launchWebUrl() {
 
-		try {
+        try {
 
-			DriverClass.getDriver().get(
-					ConfigReader.getProperties()
-							.getProperty("url"));
+            DriverClass.getDriver().get(
+                    ConfigReader.getProperties()
+                            .getProperty("url"));
 
-			DriverClass.getDriver()
-					.manage()
-					.window()
-					.maximize();
+            DriverClass.getDriver()
+                    .manage()
+                    .timeouts()
+                    .implicitlyWait(
+                            Duration.ofSeconds(10));
 
-			DriverClass.getDriver()
-					.manage()
-					.timeouts()
-					.implicitlyWait(
-							Duration.ofSeconds(10));
+            log.info(
+                    "Application launched successfully");
 
-			log.info(
-					"Application launched successfully");
+        } catch (Exception e) {
 
-		} catch (Exception e) {
+            log.error(
+                    "Failed to launch application",
+                    e);
 
-			log.error(
-					"Failed to launch application : "
-							+ e.getMessage());
-		}
-	}
+            throw e;
+        }
+    }
 
-	public void clickShopByCategory() {
+    public void clickShopByCategory() {
 
-		try {
+        try {
 
-			wait.until(
-					ExpectedConditions.visibilityOf(
-							sbcp.shopByCategoryMenu));
+            wait.until(
+                    ExpectedConditions.visibilityOf(
+                            sbcp.shopByCategoryMenu));
 
-			wait.until(
-					ExpectedConditions
-							.elementToBeClickable(
-									sbcp.shopByCategoryMenu));
+            wait.until(
+                    ExpectedConditions
+                            .elementToBeClickable(
+                                    sbcp.shopByCategoryMenu));
 
-			sbcp.shopByCategoryMenu.click();
+            sbcp.shopByCategoryMenu.click();
 
-			log.info(
-					"Clicked Shop By Category Menu");
+            log.info(
+                    "Clicked Shop By Category Menu");
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			log.error(
-					"Unable to click Shop By Category Menu : "
-							+ e.getMessage());
+            log.error(
+                    "Unable to click Shop By Category Menu",
+                    e);
 
-			throw e;
-		}
-	}
+            throw e;
+        }
+    }
 
-	public void selectCategory(String category) {
+    public void selectCategory(String category) {
 
-		try {
+        try {
 
-			if (category.equalsIgnoreCase(
-					"Desktops & Monitors")) {
+            switch (category.toLowerCase()) {
 
-				wait.until(
-						ExpectedConditions
-								.elementToBeClickable(
-										sbcp.desktopsCategory));
+                case "desktops & monitors":
 
-				sbcp.desktopsCategory.click();
+                    wait.until(
+                            ExpectedConditions
+                                    .elementToBeClickable(
+                                            sbcp.desktopsCategory));
 
-				log.info(
-						"Selected Desktops & Monitors");
-			}
+                    sbcp.desktopsCategory.click();
 
-			else if (category.equalsIgnoreCase(
-					"Web Cameras")) {
+                    log.info(
+                            "Selected Desktops & Monitors");
+                    break;
 
-				wait.until(
-						ExpectedConditions
-								.elementToBeClickable(
-										sbcp.cameras));
+                case "web cameras":
 
-				sbcp.cameras.click();
+                    wait.until(
+                            ExpectedConditions
+                                    .elementToBeClickable(
+                                            sbcp.cameras));
 
-				log.info("Selected Web Cameras");
-			}
+                    sbcp.cameras.click();
 
-			else if (category.equalsIgnoreCase(
-					"Phone, Tablets & Ipod")) {
+                    log.info(
+                            "Selected Web Cameras");
+                    break;
 
-				wait.until(
-						ExpectedConditions
-								.elementToBeClickable(
-										sbcp.tablets));
+                case "phone, tablets & ipod":
 
-				sbcp.tablets.click();
+                    wait.until(
+                            ExpectedConditions
+                                    .elementToBeClickable(
+                                            sbcp.tablets));
 
-				log.info(
-						"Selected Phone, Tablets & Ipod");
-			}
+                    sbcp.tablets.click();
 
-			else if (category.equalsIgnoreCase(
-					"Laptops & Notebooks")) {
+                    log.info(
+                            "Selected Phone, Tablets & Ipod");
+                    break;
 
-				wait.until(
-						ExpectedConditions
-								.elementToBeClickable(
-										sbcp.laptops));
+                case "laptops & notebooks":
 
-				sbcp.laptops.click();
+                    wait.until(
+                            ExpectedConditions
+                                    .elementToBeClickable(
+                                            sbcp.laptops));
 
-				log.info(
-						"Selected Laptops & Notebooks");
-			}
+                    sbcp.laptops.click();
 
-		} catch (Exception e) {
+                    log.info(
+                            "Selected Laptops & Notebooks");
+                    break;
 
-			log.error(
-					"Failed to select category : "
-							+ e.getMessage());
+                default:
 
-			throw e;
-		}
-	}
+                    throw new IllegalArgumentException(
+                            "Unsupported category: "
+                                    + category);
+            }
 
-	public String getPageTitle() {
+        } catch (Exception e) {
 
-		String title = "";
+            log.error(
+                    "Failed to select category",
+                    e);
 
-		try {
+            throw e;
+        }
+    }
 
-			title =
-					DriverClass.getDriver().getTitle();
+    public String getPageTitle() {
 
-			log.info(
-					"Page title fetched successfully");
+        String title = "";
 
-		} catch (Exception e) {
+        try {
 
-			log.error(
-					"Unable to fetch page title : "
-							+ e.getMessage());
-		}
+            title =
+                    DriverClass.getDriver().getTitle();
 
-		return title;
-	}
+            log.info(
+                    "Page title fetched successfully");
+
+        } catch (Exception e) {
+
+            log.error(
+                    "Unable to fetch page title",
+                    e);
+        }
+
+        return title;
+    }
 }

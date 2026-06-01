@@ -26,7 +26,6 @@ public class DriverClass {
     private static final Logger logger = LogManager.getLogger(DriverClass.class);
 
     public static WebDriver getDriver() {
-
         return driver.get();
     }
 
@@ -35,21 +34,7 @@ public class DriverClass {
         try {
 
             String browser = ConfigReader.getProperties().getProperty("browser");
-
-<<<<<<< HEAD
-			String headlessValue =
-					ConfigReader.getProperties().getProperty("headless");
-
-			boolean headless =
-					headlessValue != null
-							&& headlessValue.equalsIgnoreCase("true");
-=======
             String headlessValue = ConfigReader.getProperties().getProperty("headless");
-
-            // ==========================================
-            // DEFAULT VALUES
-            // ==========================================
->>>>>>> 051a820305ae9eae876e05831b681177de288d9d
 
             if (browser == null || browser.trim().isEmpty()) {
 
@@ -63,7 +48,6 @@ public class DriverClass {
                     && headlessValue.equalsIgnoreCase("true");
 
             logger.info("Initializing Browser : " + browser);
-
             logger.info("Headless Mode : " + headless);
 
             // ==========================================
@@ -74,16 +58,6 @@ public class DriverClass {
 
                 WebDriverManager.chromedriver().setup();
 
-<<<<<<< HEAD
-				// Disable Automation Banner
-				options.setExperimentalOption(
-						"excludeSwitches",
-						new String[] { "enable-automation" });
-
-				options.setExperimentalOption(
-						"useAutomationExtension",
-						false);
-=======
                 ChromeOptions options = new ChromeOptions();
 
                 // Browser Stability
@@ -91,7 +65,6 @@ public class DriverClass {
                 options.addArguments("--disable-dev-shm-usage");
                 options.addArguments("--disable-gpu");
                 options.addArguments("--remote-allow-origins=*");
->>>>>>> 051a820305ae9eae876e05831b681177de288d9d
 
                 // Disable Chrome Popups
                 options.addArguments("--disable-notifications");
@@ -114,19 +87,9 @@ public class DriverClass {
 
                 Map<String, Object> prefs = new HashMap<>();
 
-<<<<<<< HEAD
-				// Disable Notifications
-				prefs.put(
-						"profile.default_content_setting_values.notifications",
-						2);
-=======
                 prefs.put("credentials_enable_service", false);
->>>>>>> 051a820305ae9eae876e05831b681177de288d9d
-
                 prefs.put("profile.password_manager_enabled", false);
-
                 prefs.put("profile.password_manager_leak_detection", false);
-
                 prefs.put(
                         "profile.default_content_setting_values.notifications",
                         2);
@@ -174,24 +137,13 @@ public class DriverClass {
                 logger.info("Firefox Browser Launched Successfully");
             }
 
-<<<<<<< HEAD
-				throw new RuntimeException(
-						"Invalid Browser Name : " + browser);
-			}
-=======
             // ==========================================
             // INVALID BROWSER
             // ==========================================
->>>>>>> 051a820305ae9eae876e05831b681177de288d9d
 
             else {
 
-<<<<<<< HEAD
-			getDriver().manage().timeouts()
-					.implicitlyWait(Duration.ofSeconds(10));
-=======
                 logger.error("Invalid Browser Name : " + browser);
->>>>>>> 051a820305ae9eae876e05831b681177de288d9d
 
                 throw new RuntimeException(
                         "Invalid Browser Name : " + browser);

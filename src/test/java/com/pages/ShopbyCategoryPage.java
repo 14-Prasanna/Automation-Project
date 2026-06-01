@@ -4,9 +4,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class ShopByCategoryPage extends BasePage {
+public class ShopbyCategoryPage extends BasePage {
 
-    public ShopByCategoryPage(WebDriver driver) {
+    public ShopbyCategoryPage(WebDriver driver) {
         super(driver);
     }
 
