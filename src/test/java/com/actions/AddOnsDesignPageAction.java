@@ -27,6 +27,6 @@ public class AddOnsDesignPageAction extends BaseAction {
 		  waitForVisibility(adp.topcategories);
 		  getText(adp.topcategories);
 	  }
-	  public void
+	  
 
 }

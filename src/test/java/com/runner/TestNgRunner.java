@@ -13,6 +13,7 @@ import org.testng.annotations.DataProvider;
 				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
 				"rerun:target/failedrerun.txt" },
 
+
 		
         tags="@AccountFeature",
 
@@ -25,6 +26,8 @@ import org.testng.annotations.DataProvider;
 
         
         
+=======
+>>>>>>> 96d9079cdde2ed4463588d7ec9cafed5a9ba3589
 
         monochrome = true
 )
