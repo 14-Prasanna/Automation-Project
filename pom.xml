@@ -27,6 +27,7 @@
         <log4j.version>2.25.4</log4j.version>
         <extentreports.version>5.1.2</extentreports.version>
         <allure.version>2.29.0</allure.version>
+        <sonar.version>5.0.0.4389</sonar.version>
     </properties>
 
     <dependencies>
@@ -143,20 +144,32 @@
                 <version>0.8.12</version>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
+                        <goals><goal>prepare-agent</goal></goals>
                     </execution>
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
+                        <goals><goal>report</goal></goals>
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- SonarQube -->
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${sonar.version}</version>
+            </plugin>
         </plugins>
     </build>
+
+    <!-- ==================== GitHub Packages Deployment ==================== -->
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/TAMILKUMAR0027/Automation-Project</url>
+        </repository>
+    </distributionManagement>
 
 </project>
