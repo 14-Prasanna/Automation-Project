@@ -1,28 +1,18 @@
 # =============================================
 # GitHub Funding Configuration
 # =============================================
-# This file enables the "Sponsor" button on your repository.
-# Learn more: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
+# Enables the "Sponsor" button on the repository
 
-# These are supported funding model platforms
+github: Prasanna-14
 
-github: TAMILKUMAR0027   # Your main GitHub username (recommended)
+# Buy Me a Coffee for Prasanna
+buy_me_a_coffee: prasanna_14
 
-# Optional: Add more funding platforms below
+# Optional custom links
+custom:
+  - https://www.buymeacoffee.com/prasanna_14
 
-# patreon: your_patreon_username
-# open_collective: your_open_collective
-# ko_fi: your_kofi_username
-# buy_me_a_coffee: your_buymeacoffee_username
-# liberapay: your_liberapay_username
-
-# Custom sponsorship links (up to 4)
-custom: 
-  - https://www.buymeacoffee.com/tamilkumar0027   # Example - change as needed
-  # - https://paypal.me/yourpaypal
-  # - https://www.paypal.com/paypalme/yourusername
-
-# Disable unused platforms for cleanliness
+# Disabled platforms (clean config)
 patreon: null
 open_collective: null
 ko_fi: null
